@@ -11,6 +11,9 @@ namespace JobRecorderNet.Models
         }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<Job> jobs { get; set; }
+        public DbSet<License> Licenses { get; set; }
+
 
     }
 }
