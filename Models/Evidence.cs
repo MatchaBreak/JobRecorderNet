@@ -13,6 +13,12 @@
         [Key]
         public int Id { get; set; }
 
+        //Foreign key JobId 
+        [Required]
+        public int JobId { get; set; }
+        public required Job Job { get; set; }
+
+
         [Required, StringLength(255)]
         public required string Title { get; set; }
 
@@ -25,7 +31,6 @@
 
         [StringLength(255)]
         public string? Description { get; set; }
-
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime? UpdatedAt { get; set; }
