@@ -1,10 +1,16 @@
-﻿
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace JobRecorderNet.Models
 {
     public class Address
     {
+<<<<<<< HEAD
         // Primary Key
         [Key] 
+=======
+        [Key]
+>>>>>>> 0c0f9bb256507bf0208275bf2d781b3754702ae3
         public int Id { get; set; }
 
         // Optional Client referece
