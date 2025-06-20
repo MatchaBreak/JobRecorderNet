@@ -1,9 +1,11 @@
-﻿
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace JobRecorderNet.Models
 {
     public class Address
     {
-        [Key] 
+        [Key]
         public int Id { get; set; }
 
         [ForeignKey("ClientId")]
