@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using JobRecorderNet.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.

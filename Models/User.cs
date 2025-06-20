@@ -1,19 +1,15 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-
-namespace JobRecorderNet.Models
+﻿namespace JobRecorderNet.Models
 {
     public class User
     {
+        [Key]
         public int Id { get; set; }
-
 
         [Required, StringLength(255)]
         public string Name { get; set; }
 
         [Required, StringLength(255), EmailAddress]
         public string Email { get; set; }
-
 
         [Required]
         public string Password { get; set; }
@@ -30,11 +26,16 @@ namespace JobRecorderNet.Models
         [Required]
         public string Role { get; set; }
 
-        // Licenses + Roles per jobs
+        // Licenses 
         public ICollection<License> Licenses { get; set; } 
+
+        //For pivot table with Jobs
         public ICollection<Job> SupervisedJobs { get; set; }
         public ICollection<Job> TechnicianJobs { get; set; }
-        
+
+
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime? UpdatedAt { get; set; }
 
     }
 }
