@@ -39,7 +39,7 @@ namespace JobRecorderNet.Models
 
         [Required]
         public int AddressId { get; set; }
-        public Address Address { get; set; }
+        public required Address Address { get; set; }
 
         [StringLength(255)]
         public string? Description { get; set; }
@@ -47,6 +47,8 @@ namespace JobRecorderNet.Models
         [Required]
         public JobStatus Status { get; set; }
 
+        // For storing evidence 
+        public ICollection<Evidence> Evidences { get; set; } = new List<Evidence>();
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime? UpdatedAt { get; set; }
