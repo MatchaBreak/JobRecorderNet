@@ -18,49 +18,6 @@ namespace JobRecorderNet.Controllers
             return View();
         }
 
-        public IActionResult Users()
-        {
-            return View();
-        }
-
-        public IActionResult Clients()
-        {
-            return View();
-        }
-        public IActionResult Addresses()
-        {
-            return View();
-        }
-
-        public IActionResult Jobs()
-        {
-            return View();
-        }
-
-        public IActionResult MyJobs()
-        {
-            return View();
-        }
-
-        public IActionResult TRCs()
-        {
-            return View();
-        }
-
-        public IActionResult MyTRCs()
-        {
-            return View();
-        }
-
-        public IActionResult Licences()
-        {
-            return View();
-        }
-        public IActionResult MyLicences()
-        {
-            return View();
-        }
-
         public IActionResult Privacy()
         {
             return View();
