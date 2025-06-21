@@ -16,10 +16,9 @@
         }
     </style>
 </head>
-<body class="bg-gray-50 min-h-screen flex flex-col">
-
+<body class="bg-gray-50 flex flex-col">
     <!-- Sticky Navigation, still not working -->
-    <header class="sticky top-0 z-50 bg-blue-100 shadow-md rounded-b-xl mx-auto w-[95%] mt-2">
+    <header class="sticky top-0 z-50 bg-blue-100 shadow-md rounded-xl mx-auto w-[100%] mt-2">
         <div class="flex items-center justify-between flex-wrap px-4 py-2">
             <div class="nav-links flex overflow-x-auto whitespace-nowrap gap-2 py-2">
                 <a class="text-gray-800 font-semibold hover:text-blue-600 hover:bg-white rounded px-3 py-2 transition flex items-center"
@@ -47,12 +46,12 @@
     </header>
 
     <!-- Main Content -->
-    <main class="flex-grow container max-w-screen-2xl mx-auto py-10 px-4">
+    <main class="flex h-full w-full p-2">
         @RenderBody()
     </main>
 
     <!-- Footer -->
-    <footer class="bg-white border-t text-gray-500 text-sm text-center py-4">
+    <footer class="bg-white border-t text-gray-500 text-sm text-center py-4 hidden">
         &copy; 2025 - JobRecorderNet - <a class="text-blue-500 hover:underline" asp-controller="Home" asp-action="Privacy">Privacy</a>
     </footer>
 
