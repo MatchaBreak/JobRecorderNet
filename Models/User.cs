@@ -32,7 +32,7 @@
         public required string Address { get; set; }
 
         [Required]
-        public required string Role { get; set; }
+        public required UserRole Role { get; set; }
 
         // Licenses 
         public ICollection<License>? Licenses { get; set; } 
