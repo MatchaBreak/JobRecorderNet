@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-namespace JobRecorderNet.Models
+﻿namespace JobRecorderNet.Models
 {
     public enum JobType
     {

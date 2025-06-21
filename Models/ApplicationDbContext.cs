@@ -59,7 +59,8 @@ namespace JobRecorderNet.Models
             modelBuilder.Entity<Job>()
                 .HasMany(j => j.Evidences)
                 .WithOne(e => e.Job)
-                .HasForeignKey(e => e.JobId);
+                .HasForeignKey(e => e.JobId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             // Evidence has one Job
             modelBuilder.Entity<Evidence>()
@@ -85,12 +86,6 @@ namespace JobRecorderNet.Models
                 .HasMany(u => u.Licenses)
                 .WithOne()
                 .HasForeignKey("UserId");
-
-            // Job has many evidences (1-to-many)
-            modelBuilder.Entity<Job>()
-                .HasMany(j => j.Evidences)
-                .WithOne()
-                .HasForeignKey("JobId");
         }
 
     }

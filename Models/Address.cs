@@ -1,7 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace JobRecorderNet.Models
+﻿namespace JobRecorderNet.Models
 {
     public class Address
     {
@@ -42,7 +39,6 @@ namespace JobRecorderNet.Models
         // Not nullable by default
         [Required]
         public bool IsMain { get; set; }
-
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime? UpdatedAt { get; set; }
