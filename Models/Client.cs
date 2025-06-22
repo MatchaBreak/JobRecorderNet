@@ -20,7 +20,7 @@ namespace JobRecorderNet.Models
 
         public required ICollection<Address> Addresses { get; set; }
 
-        // Custom validation logic here
+        // Custom validation logic test
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             if (Addresses == null || !Addresses.Any())

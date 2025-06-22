@@ -29,6 +29,7 @@
         public int ClientId { get; set; }
         public required Client Client { get; set; }
 
+        // Job has 1 supervisor and can have multiple technicians
         [Required]
         public int SupervisorId { get; set; }
         public required User Supervisor { get; set; }
