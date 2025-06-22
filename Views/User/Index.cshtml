@@ -6,21 +6,23 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@ViewData["Title"]</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
+
 <body class="bg-gray-100">
     <div class="flex flex-col items-center w-full">
         <!-- Page Header -->
         <div class="w-full pb-3 rounded-lg pt-6">
             <div class="flex justify-between items-center">
                 <h1 class="text-3xl font-semibold">Users</h1>
-                <a class="bg-green-600 hover:bg-green-700 transition duration-500 text-white px-5 py-2 rounded" asp-action="Create">Create New</a>
+                <a class="bg-green-600 hover:bg-green-700 transition duration-500 text-white px-5 py-2 rounded"
+                    asp-action="Create">Create New</a>
             </div>
-           
         </div>
 
         <!-- User Table -->
@@ -63,8 +65,10 @@
                                 </td>
                                 <td class="px-2 md:px-4 py-2 w-[1%] whitespace-nowrap">
                                     <div class="flex gap-1">
-                                        <a asp-action="Details" asp-route-id="@user.Id" class="bg-blue-600 hover:bg-blue-700 transition duration-500 text-white px-2 py-1 rounded">View</a>
-                                        <a asp-action="Edit" asp-route-id="@user.Id" class="bg-yellow-400 hover:bg-yellow-500 transition duration-500 text-black px-2 py-1 rounded">Edit</a>
+                                        <a asp-action="Details" asp-route-id="@user.Id"
+                                            class="bg-blue-600 hover:bg-blue-700 transition duration-500 text-white px-2 py-1 rounded">View</a>
+                                        <a asp-action="Edit" asp-route-id="@user.Id"
+                                            class="bg-yellow-400 hover:bg-yellow-500 transition duration-500 text-black px-2 py-1 rounded">Edit</a>
                                     </div>
                                 </td>
                             </tr>
@@ -81,4 +85,5 @@
         </div>
     </div>
 </body>
+
 </html>
