@@ -2,7 +2,58 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@ViewData["Title"]</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+
+<body class="bg-gray-100">
+    <div class="flex flex-col items-center w-full">
+        <div class="w-full pb-3 rounded-lg pt-6">
+            <div class="flex justify-between items-center">
+                <h1 class="text-3xl font-semibold">Dashboard</h1>
+                <div
+                    class="mt-4 flex flex-col items-center bg-gradient-to-r from-blue-100/75 to-grey-200/75 p-6 rounded-lg shadow-lg w-full md:w-auto self-start border-l-4 border-indigo-300">
+                    <p class="text-xl font-bold text-gray-800 text-center">Welcome Back, ____!</p>
+                    <p class="text-sm text-gray-600 mt-2 text-center">You are currently logged in as an ____</p>
+                </div>
+                <a class="bg-red-500 text-white px-6 py-2 rounded hover:bg-red-600 transition duration-300"
+                    asp-action="">Print Info</a>
+            </div>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 w-full pt-6 font-bold">
+            <div class="flex flex-col items-center justify-center border p-4 rounded-md w-full text-center h-32">
+                <p>___</p>
+                <p class="text-gray-400">Total Users</p>
+            </div>
+            <div class="flex flex-col items-center justify-center border p-4 rounded-md w-full text-center h-32">
+                <p>___</p>
+                <p class="text-gray-400">Total Clients</p>
+            </div>
+            <div class="flex flex-col items-center justify-center border p-4 rounded-md w-full text-center h-32">
+                <p>___</p>
+                <p class="text-gray-400">Total Jobs</p>
+            </div>
+            <div class="flex flex-col items-center justify-center border p-4 rounded-md w-full text-center h-32">
+                <p>___</p>
+                <p class="text-gray-400">Files/Evidence Uploaded</p>
+            </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 w-full pt-4">
+
+        <div class="flex flex-col items-center justify-center border p-4 rounded-md w-full text-center h-32">
+            <p>Placeholder for recent users</p>
+        </div>
+        <div class="flex flex-col items-center justify-center border p-4 rounded-md w-full text-center h-32">
+            <p>Placeholder for recent jobs</p>
+        </div>
+
+    </div>
+    </div>
+</body>
