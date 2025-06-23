@@ -1,65 +1,55 @@
 @model IEnumerable<JobRecorderNet.Models.Client>
 
 @{
-    ViewData["Title"] = "Index";
+    var SearchBarViewModel = ViewData["SearchBarViewModel"] as JobRecorderNet.Models.SearchBarViewModel;
+    ViewData["Title"] = "Clients List";
 }
 
-<h1>Index</h1>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@ViewData["Title"]</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Phone)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Mobile)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreatedAt)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UpdatedAt)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Phone)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Mobile)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedAt)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UpdatedAt)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<body class="bg-gray-100">
+    <div class="flex flex-col items-center w-full">
+        @* @await Html.PartialAsync("ui/_PageHeader", SearchBarViewModel) *@
+        <p>
+            <a asp-action="Create">Create New</a>
+        </p>
+        <div class="w-full py-6 overflow-x-auto">
+            <table class="min-w-full bg-white shadow rounded-lg overflow-hidden table-fixed">
+                <thead class="bg-gray-200">
+                    <tr>
+                        <th class="px-2 md:px-4 py-2 text-left">@Html.DisplayNameFor(model => model.Name)</th>
+                        <th class="px-2 md:px-4 py-2 text-left">@Html.DisplayNameFor(model => model.Email)</th>
+                        <th class="px-2 md:px-4 py-2 text-left"> @Html.DisplayNameFor(model => model.Phone) </th>
+                        <th class="px-2 md:px-4 py-2 hidden md:table-cell text-left"> @Html.DisplayNameFor(model => model.Mobile) </th>
+                        <th class="px-2 md:px-4 py-2 hidden md:table-cell text-left"> @Html.DisplayNameFor(model => model.CreatedAt) </th>
+                        <th class="px-2 md:px-4 py-2 hidden md:table-cell text-left"> @Html.DisplayNameFor(model => model.UpdatedAt) </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td > @Html.DisplayFor(modelItem => item.Name) </td>
+                            <td> @Html.DisplayFor(modelItem => item.Email) </td>
+                            <td> @Html.DisplayFor(modelItem => item.Phone) </td>
+                            <td class="px-2 md:px-4 py-2 hidden md:table-cell text-left"> @Html.DisplayFor(modelItem => item.Mobile) </td>
+                            <td class="px-2 md:px-4 py-2 hidden md:table-cell text-left"> @Html.DisplayFor(modelItem => item.CreatedAt) </td>
+                            <td class="px-2 md:px-4 py-2 hidden md:table-cell text-left"> @Html.DisplayFor(modelItem => item.UpdatedAt) </td>
+                            <td>
+                                <a class="bg-yellow-400 hover:bg-yellow-500 transition duration-500 text-black px-2 py-1 rounded" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                <a class="bg-blue-600 hover:bg-blue-700 transition duration-500 text-white px-2 py-1 rounded" asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                                <a class="bg-red-400 hover:bg-red-500 transition duration-500 text-white px-2 py-1 rounded" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</body>
