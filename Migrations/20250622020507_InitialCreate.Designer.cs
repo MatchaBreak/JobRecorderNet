@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JobRecorderNet.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250621064415_InitialCreate")]
+    [Migration("20250622020507_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -208,10 +208,9 @@ namespace JobRecorderNet.Migrations
                     b.Property<DateTime>("Expiry")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Type")
-                        .IsRequired()
+                    b.Property<int>("Type")
                         .HasMaxLength(50)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("INTEGER");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("TEXT");
@@ -263,9 +262,8 @@ namespace JobRecorderNet.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<int>("Role")
+                        .HasColumnType("INTEGER");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("TEXT");

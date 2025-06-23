@@ -41,7 +41,7 @@ namespace JobRecorderNet.Migrations
                     Phone = table.Column<string>(type: "TEXT", maxLength: 20, nullable: true),
                     Mobile = table.Column<string>(type: "TEXT", maxLength: 20, nullable: false),
                     Address = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
-                    Role = table.Column<string>(type: "TEXT", nullable: false),
+                    Role = table.Column<int>(type: "INTEGER", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "TEXT", nullable: true)
                 },
@@ -88,7 +88,7 @@ namespace JobRecorderNet.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Type = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
+                    Type = table.Column<int>(type: "INTEGER", maxLength: 50, nullable: false),
                     Expiry = table.Column<DateTime>(type: "TEXT", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "TEXT", nullable: true),

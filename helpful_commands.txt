@@ -4,8 +4,12 @@ dotnet watch run
 # For SQLite database support (VSCode)
 dotnet add package Microsoft.EntityFrameworkCore.Sqlite
 dotnet add package Microsoft.EntityFrameworkCore.Design
+
+# To generate templates (controllers, views, etc.) from the model and DBContext files
 dotnet add package Microsoft.VisualStudio.Web.CodeGeneration.Design
 
+# To roll back migrations 
+dotnet ef database update 0
 
 # to create the migration files
 dotnet ef migrations add InitialCreate
@@ -17,7 +21,7 @@ dotnet ef database update
 # User
 dotnet aspnet-codegenerator controller -name UserController -m User -dc ApplicationDbContext --relativeFolderPath Controllers --useDefaultLayout
 
-# Client 
+# Client
 dotnet aspnet-codegenerator controller -name ClientController -m Client -dc ApplicationDbContext --relativeFolderPath Controllers --useDefaultLayout
 
 # Job 
@@ -31,4 +35,3 @@ dotnet aspnet-codegenerator controller -name LicenseController -m License -dc Ap
 
 # Evidence 
 dotnet aspnet-codegenerator controller -name EvidenceController -m Evidence -dc ApplicationDbContext --relativeFolderPath Controllers --useDefaultLayout
-

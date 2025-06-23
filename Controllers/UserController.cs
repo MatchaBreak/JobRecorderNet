@@ -19,9 +19,32 @@ namespace JobRecorderNet.Controllers
         }
 
         // GET: User
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string search, string column = "all")
         {
-            return View(await _context.Users.ToListAsync());
+            var viewModel = new SearchBarViewModel
+            {
+                Title = "Users",
+                Search = search,
+                PlaceHolder = "Search by Name or Email",
+                IndexRoute = Url.Action("Index", "User"),
+                CreateRoute = Url.Action("Create", "User"),
+                Columns = new Dictionary<string, string>
+                {
+                    {"name", "Name"},
+                    {"email", "Email"},
+                    {"phone", "Phone"},
+                    {"mobile", "Mobile"},
+                    {"address", "Address"},
+                    {"role", "Role"}
+                },
+                SelectedColumn = column
+               
+            };
+
+            var users = await _context.Users.ToListAsync(); // Filter logic
+            // ViewData is a dictionary that allows you to pass data from the controller to the view
+            ViewData["SearchBarViewModel"] = viewModel; // Passes view model to the view
+            return View(users);
         }
 
         // GET: User/Details/5
