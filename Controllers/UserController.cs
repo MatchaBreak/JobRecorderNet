@@ -19,9 +19,8 @@ namespace JobRecorderNet.Controllers
         }
 
         // GET: User, also handles search + adding user button
-       public async Task<IActionResult> Index(string search, string column = "all")
+       public async Task<IActionResult> Index(string search, string column = "all") // Default to "all"
         {
-            // Normalize the search term to lowercase once
             search = search?.ToLower();
 
             var viewModel = new SearchBarViewModel
@@ -33,12 +32,13 @@ namespace JobRecorderNet.Controllers
                 CreateRoute = Url.Action("Create", "User"),
                 Columns = new Dictionary<string, string>
                 {
+                    {"all", "All"}, // Add "all" as a filter option
                     {"name", "Name"},
                     {"email", "Email"},
                     {"phone", "Phone"},
                     {"mobile", "Mobile"},
                     {"addressName", "Address Name"},
-                    { "street", "Street"},
+                    {"street", "Street"},
                     {"suburb", "Suburb"},
                     {"state", "State"},
                     {"postcode", "Postcode"},
@@ -47,12 +47,23 @@ namespace JobRecorderNet.Controllers
                 SelectedColumn = column
             };
 
-            var usersQuery = _context.Users.AsQueryable();
+            var usersQuery = _context.Users.Include(u => u.Address).AsQueryable();
 
             if (!string.IsNullOrEmpty(search))
             {
                 usersQuery = column switch
                 {
+                    "all" => usersQuery.Where(u =>
+                        u.Name.ToLower().Contains(search) ||
+                        u.Email.ToLower().Contains(search) ||
+                        (u.Phone != null && u.Phone.ToLower().Contains(search)) ||
+                        u.Mobile.ToLower().Contains(search) ||
+                        u.Address.Name.ToLower().Contains(search) ||
+                        u.Address.Street.ToLower().Contains(search) ||
+                        u.Address.Suburb.ToLower().Contains(search) ||
+                        u.Address.State.ToLower().Contains(search) ||
+                        u.Address.Postcode.ToLower().Contains(search) ||
+                        u.Role.ToString().ToLower().Contains(search)),
                     "name" => usersQuery.Where(u => u.Name.ToLower().Contains(search)),
                     "email" => usersQuery.Where(u => u.Email.ToLower().Contains(search)),
                     "phone" => usersQuery.Where(u => u.Phone != null && u.Phone.ToLower().Contains(search)),
@@ -61,7 +72,7 @@ namespace JobRecorderNet.Controllers
                     "street" => usersQuery.Where(u => u.Address.Street.ToLower().Contains(search)),
                     "suburb" => usersQuery.Where(u => u.Address.Suburb.ToLower().Contains(search)),
                     "state" => usersQuery.Where(u => u.Address.State.ToLower().Contains(search)),
-                    "postcode" => usersQuery.Where(u => u.Address.Street.ToLower().Contains(search)),
+                    "postcode" => usersQuery.Where(u => u.Address.Postcode.ToLower().Contains(search)),
                     "role" => usersQuery.Where(u => u.Role.ToString().ToLower().Contains(search)),
                     _ => usersQuery
                 };
@@ -72,7 +83,6 @@ namespace JobRecorderNet.Controllers
             ViewData["SearchBarViewModel"] = viewModel;
             return View(users);
         }
-
         // GET: User/Details/5
         public async Task<IActionResult> Details(int? id)
         {
