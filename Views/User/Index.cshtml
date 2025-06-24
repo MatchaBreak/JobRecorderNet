@@ -58,10 +58,9 @@
                                 </td>
                                 <td class="px-2 md:px-4 py-2 w-[1%] whitespace-nowrap">
                                     <div class="flex gap-1">
-                                        <a asp-action="Details" asp-route-id="@user.Id"
-                                            class="bg-blue-600 hover:bg-blue-700 transition duration-500 text-white px-2 py-1 rounded">View</a>
-                                        <a asp-action="Edit" asp-route-id="@user.Id"
-                                            class="bg-yellow-400 hover:bg-yellow-500 transition duration-500 text-black px-2 py-1 rounded">Edit</a>
+                                        <a asp-action="Details" asp-route-id="@user.Id" class="bg-blue-600 hover:bg-blue-700 transition duration-500 text-white px-2 py-1 rounded">View</a>
+                                        <a asp-action="Edit" asp-route-id="@user.Id" class="bg-yellow-400 hover:bg-yellow-500 transition duration-500 text-black px-2 py-1 rounded">Edit</a>
+                                        <a asp-action="Delete" asp-route-id="@user.Id" class="bg-red-600 hover:bg-red-700 transition duration-500 text-white px-2 py-1 rounded">Delete</a>
                                     </div>
                                 </td>
                             </tr>
