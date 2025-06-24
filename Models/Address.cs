@@ -6,12 +6,10 @@
         [Key] 
         public int Id { get; set; }
 
-        // Optional Client referece
-        [ForeignKey("ClientId")]
+        public int? ClientId { get; set; }
         public Client? Client { get; set; }
 
-        // Optional User reference
-        [ForeignKey("UserId")]
+        public int? UserId { get; set; }
         public User? User { get; set; }
 
         // Name
@@ -34,7 +32,7 @@
         // Postcode
         [Required, StringLength(4, MinimumLength = 4)]
         [RegularExpression(@"^\d{4}$", ErrorMessage = "Postcode must be 4 digits")]
-        public required string Postcose { get; set; }
+        public required string Postcode { get; set; }
 
         // Not nullable by default
         [Required]
@@ -42,6 +40,5 @@
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime? UpdatedAt { get; set; }
-
     }
 }

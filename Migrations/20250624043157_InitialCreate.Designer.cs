@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JobRecorderNet.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250622020507_InitialCreate")]
+    [Migration("20250624043157_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -40,7 +40,7 @@ namespace JobRecorderNet.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Postcose")
+                    b.Property<string>("Postcode")
                         .IsRequired()
                         .HasMaxLength(4)
                         .HasColumnType("TEXT");
@@ -69,7 +69,8 @@ namespace JobRecorderNet.Migrations
 
                     b.HasIndex("ClientId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
                     b.ToTable("Addresses");
                 });
@@ -231,11 +232,6 @@ namespace JobRecorderNet.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("TEXT");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("TEXT");
 
@@ -295,8 +291,9 @@ namespace JobRecorderNet.Migrations
                         .HasForeignKey("ClientId");
 
                     b.HasOne("JobRecorderNet.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
+                        .WithOne("Address")
+                        .HasForeignKey("JobRecorderNet.Models.Address", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Client");
 
@@ -377,6 +374,8 @@ namespace JobRecorderNet.Migrations
 
             modelBuilder.Entity("JobRecorderNet.Models.User", b =>
                 {
+                    b.Navigation("Address");
+
                     b.Navigation("Licenses");
 
                     b.Navigation("SupervisedJobs");

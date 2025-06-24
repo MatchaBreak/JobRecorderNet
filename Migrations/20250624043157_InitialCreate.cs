@@ -40,7 +40,6 @@ namespace JobRecorderNet.Migrations
                     Password = table.Column<string>(type: "TEXT", nullable: false),
                     Phone = table.Column<string>(type: "TEXT", maxLength: 20, nullable: true),
                     Mobile = table.Column<string>(type: "TEXT", maxLength: 20, nullable: false),
-                    Address = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
                     Role = table.Column<int>(type: "INTEGER", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "TEXT", nullable: true)
@@ -62,7 +61,7 @@ namespace JobRecorderNet.Migrations
                     Street = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
                     Suburb = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
                     State = table.Column<string>(type: "TEXT", nullable: false),
-                    Postcose = table.Column<string>(type: "TEXT", maxLength: 4, nullable: false),
+                    Postcode = table.Column<string>(type: "TEXT", maxLength: 4, nullable: false),
                     IsMain = table.Column<bool>(type: "INTEGER", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "TEXT", nullable: true)
@@ -79,7 +78,8 @@ namespace JobRecorderNet.Migrations
                         name: "FK_Addresses_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -200,7 +200,8 @@ namespace JobRecorderNet.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Addresses_UserId",
                 table: "Addresses",
-                column: "UserId");
+                column: "UserId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Evidence_JobId",

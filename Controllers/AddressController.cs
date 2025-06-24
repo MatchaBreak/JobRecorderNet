@@ -53,7 +53,7 @@ namespace JobRecorderNet.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Street,Suburb,State,Postcose,IsMain,CreatedAt,UpdatedAt")] Address address)
+        public async Task<IActionResult> Create([Bind("Id,Name,Street,Suburb,State,Postcode,IsMain,CreatedAt,UpdatedAt")] Address address)
         {
             if (ModelState.IsValid)
             {
@@ -85,7 +85,7 @@ namespace JobRecorderNet.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Street,Suburb,State,Postcose,IsMain,CreatedAt,UpdatedAt")] Address address)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Street,Suburb,State,Postcode,IsMain,CreatedAt,UpdatedAt")] Address address)
         {
             if (id != address.Id)
             {

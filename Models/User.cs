@@ -28,8 +28,8 @@
         [Required, StringLength(20)]
         public required string Mobile { get; set; }
 
-        [Required, StringLength(255)]
-        public required string Address { get; set; }
+        public Address? Address { get; set; } 
+        
 
         [Required]
         public required UserRole Role { get; set; }

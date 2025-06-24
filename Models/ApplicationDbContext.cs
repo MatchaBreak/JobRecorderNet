@@ -86,6 +86,13 @@ namespace JobRecorderNet.Models
                 .HasMany(u => u.Licenses)
                 .WithOne()
                 .HasForeignKey("UserId");
+
+            // User has one address 
+            modelBuilder.Entity<User>()
+                .HasOne(u => u.Address)
+                .WithOne(a => a.User)
+                .HasForeignKey<Address>(a => a.UserId) 
+                .OnDelete(DeleteBehavior.Cascade); 
         }
 
     }

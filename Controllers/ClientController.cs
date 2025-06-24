@@ -19,9 +19,57 @@ namespace JobRecorderNet.Controllers
         }
 
         // GET: Client
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string search, string column = "all")
         {
-            return View(await _context.Clients.ToListAsync());
+            search = search?.ToLower();
+
+            var viewModel = new SearchBarViewModel
+            {
+                Title = "Clients",
+                Search = search,
+                PlaceHolder = "Search Clients...",
+                IndexRoute = Url.Action("Index", "Client"),
+                CreateRoute = Url.Action("Create", "Client"),
+                Columns = new Dictionary<string, String>
+                {
+                    {"name", "Name"},
+                    {"index", "Index"},
+                    {"email", "Email"},
+                    {"phone", "Phone"},
+                    {"mobile", "Mobile"},
+                    {"addressName", "Address Name"},
+                    {"street", "Street"},
+                    {"suburb", "Suburb"},
+                    {"state", "State"},
+                    {"postcode", "Postcode"}
+                },
+                SelectedColumn = column
+            };
+
+            var clientsQuery = _context.Clients.Include(c => c.Addresses).AsQueryable();
+
+            if (!string.IsNullOrEmpty(search))
+            {
+                clientsQuery = column switch
+                {
+                    "name" => clientsQuery.Where(c => c.Name.ToLower().Contains(search)),
+                    "email" => clientsQuery.Where(c => c.Email.ToLower().Contains(search)),
+                    "phone" => clientsQuery.Where(c => c.Phone != null && c.Phone.ToLower().Contains(search)),
+                    "mobile" => clientsQuery.Where(c => c.Mobile.ToLower().Contains(search)),
+                    "addressName" => clientsQuery.Where(c => c.Addresses.Any(a => a.Name.ToLower().Contains(search))),
+                    "street" => clientsQuery.Where(c => c.Addresses.Any(a => a.Street.ToLower().Contains(search))),
+                    "suburb" => clientsQuery.Where(c => c.Addresses.Any(a => a.Suburb.ToLower().Contains(search))),
+                    "state" => clientsQuery.Where(c => c.Addresses.Any(a => a.State.ToLower().Contains(search))),
+                    "postcode" => clientsQuery.Where(c => c.Addresses.Any(a => a.Postcode.ToLower().Contains(search))),
+                    _ => clientsQuery
+                };
+            }
+
+            // list of clients returned in the view
+            var clients = await clientsQuery.ToListAsync();
+
+            ViewData["SearchBarViewModel"] = viewModel;
+            return View(clients);
         }
 
         // GET: Client/Details/5

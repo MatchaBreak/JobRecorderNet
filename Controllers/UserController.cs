@@ -18,14 +18,17 @@ namespace JobRecorderNet.Controllers
             _context = context;
         }
 
-        // GET: User
-        public async Task<IActionResult> Index(string search, string column = "all")
+        // GET: User, also handles search + adding user button
+       public async Task<IActionResult> Index(string search, string column = "all")
         {
+            // Normalize the search term to lowercase once
+            search = search?.ToLower();
+
             var viewModel = new SearchBarViewModel
             {
                 Title = "Users",
                 Search = search,
-                PlaceHolder = "Search by Name or Email",
+                PlaceHolder = "Search Users...",
                 IndexRoute = Url.Action("Index", "User"),
                 CreateRoute = Url.Action("Create", "User"),
                 Columns = new Dictionary<string, string>
@@ -34,16 +37,39 @@ namespace JobRecorderNet.Controllers
                     {"email", "Email"},
                     {"phone", "Phone"},
                     {"mobile", "Mobile"},
-                    {"address", "Address"},
+                    {"addressName", "Address Name"},
+                    { "street", "Street"},
+                    {"suburb", "Suburb"},
+                    {"state", "State"},
+                    {"postcode", "Postcode"},
                     {"role", "Role"}
                 },
                 SelectedColumn = column
-               
             };
 
-            var users = await _context.Users.ToListAsync(); // Filter logic
-            // ViewData is a dictionary that allows you to pass data from the controller to the view
-            ViewData["SearchBarViewModel"] = viewModel; // Passes view model to the view
+            var usersQuery = _context.Users.AsQueryable();
+
+            if (!string.IsNullOrEmpty(search))
+            {
+                usersQuery = column switch
+                {
+                    "name" => usersQuery.Where(u => u.Name.ToLower().Contains(search)),
+                    "email" => usersQuery.Where(u => u.Email.ToLower().Contains(search)),
+                    "phone" => usersQuery.Where(u => u.Phone != null && u.Phone.ToLower().Contains(search)),
+                    "mobile" => usersQuery.Where(u => u.Mobile.ToLower().Contains(search)),
+                    "addressName" => usersQuery.Where(u => u.Address.Name.ToLower().Contains(search)),
+                    "street" => usersQuery.Where(u => u.Address.Street.ToLower().Contains(search)),
+                    "suburb" => usersQuery.Where(u => u.Address.Suburb.ToLower().Contains(search)),
+                    "state" => usersQuery.Where(u => u.Address.State.ToLower().Contains(search)),
+                    "postcode" => usersQuery.Where(u => u.Address.Street.ToLower().Contains(search)),
+                    "role" => usersQuery.Where(u => u.Role.ToString().ToLower().Contains(search)),
+                    _ => usersQuery
+                };
+            }
+
+            var users = await usersQuery.ToListAsync();
+
+            ViewData["SearchBarViewModel"] = viewModel;
             return View(users);
         }
 
@@ -76,16 +102,20 @@ namespace JobRecorderNet.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Email,Password,Phone,Mobile,Address,Role,CreatedAt,UpdatedAt")] User user)
+        public async Task<IActionResult> Create(User user)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(user);
+                // Saves the User and Address together
+                _context.Users.Add(user);
                 await _context.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index));
             }
+
             return View(user);
         }
+
 
         // GET: User/Edit/5
         public async Task<IActionResult> Edit(int? id)

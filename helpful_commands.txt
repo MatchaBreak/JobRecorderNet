@@ -11,7 +11,7 @@ dotnet add package Microsoft.VisualStudio.Web.CodeGeneration.Design
 # To roll back migrations 
 dotnet ef database update 0
 
-# to create the migration files
+# to create the migration files (delete migrations first if they exist)
 dotnet ef migrations add InitialCreate
 
 # to apply the migrations to the database

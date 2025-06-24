@@ -12,6 +12,8 @@ namespace JobRecorderNet.Models
         [Key]
         public int Id { get; set; }
 
+        // Needs a reference to the User model
+
         [Required, StringLength(50)]
         public required LicenseType Type { get; set; }
 
