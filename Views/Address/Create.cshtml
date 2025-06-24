@@ -4,62 +4,80 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<!DOCTYPE html>
+<html lang="en">
 
-<h4>Address</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@ViewData["Title"]</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+
+<body class="bg-gray-100">
+    <div class="flex flex-col items-center w-full">
+        <div class="w-full pb-3 rounded-lg pt-6">
+            <div class="flex justify-between items-center">
+                <h1 class="text-3xl font-semibold">Create Address</h1>
+                <a class="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600 transition duration-300"
+                    asp-action="Index">Back to Addresses</a>
             </div>
-            <div class="form-group">
-                <label asp-for="Street" class="control-label"></label>
-                <input asp-for="Street" class="form-control" />
-                <span asp-validation-for="Street" class="text-danger"></span>
+        </div>
+
+        <div class="w-full">
+            <div class="w-full">
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="flex flex-col gap-4 border p-6 rounded-lg bg-white w-full">
+
+                        <div class="form-group">
+                            <label asp-for="Name" class="control-label block text-xl font-semibold"></label>
+                            <input asp-for="Name" class="form-control mt-1 w-full border rounded p-2 bg-gray-50" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Street" class="control-label block text-xl font-semibold"></label>
+                            <input asp-for="Street" class="form-control mt-1 w-full border rounded p-2 bg-gray-50" />
+                            <span asp-validation-for="Street" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Suburb" class="control-label block text-xl font-semibold"></label>
+                            <input asp-for="Suburb" class="form-control mt-1 w-full border rounded p-2 bg-gray-50" />
+                            <span asp-validation-for="Suburb" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="State" class="control-label block text-xl font-semibold"></label>
+                            <input asp-for="State" class="form-control mt-1 w-full border rounded p-2 bg-gray-50" />
+                            <span asp-validation-for="State" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Postcose" class="control-label block text-xl font-semibold"></label>
+                            <input asp-for="Postcose" class="form-control mt-1 w-full border rounded p-2 bg-gray-50" />
+                            <span asp-validation-for="Postcose" class="text-danger"></span>
+                        </div>
+                        <div class="form-group form-check">
+                            <label class="form-check-label">
+                                <input class="form-check-input" asp-for="IsMain" /> @Html.DisplayNameFor(model =>
+                                                                model.IsMain)
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="CreatedAt" class="control-label block text-xl font-semibold"></label>
+                            <input asp-for="CreatedAt" class="form-control mt-1 w-full border rounded p-2 bg-gray-50" />
+                            <span asp-validation-for="CreatedAt" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="UpdatedAt" class="control-label block text-xl font-semibold"></label>
+                            <input asp-for="UpdatedAt" class="form-control mt-1 w-full border rounded p-2 bg-gray-50" />
+                            <span asp-validation-for="UpdatedAt" class="text-danger"></span>
+                        </div>
+                        <div class="flex form-group w-full justify-center">
+                            <input type="submit" value="Add Address" class="btn btn-primary cursor-pointer bg-green-600 hover:bg-green-700 transition duration-300 text-white px-6 py-2 rounded" />
+                        </div>
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <label asp-for="Suburb" class="control-label"></label>
-                <input asp-for="Suburb" class="form-control" />
-                <span asp-validation-for="Suburb" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="State" class="control-label"></label>
-                <input asp-for="State" class="form-control" />
-                <span asp-validation-for="State" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Postcode" class="control-label"></label>
-                <input asp-for="Postcode" class="form-control" />
-                <span asp-validation-for="Postcode" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="IsMain" /> @Html.DisplayNameFor(model => model.IsMain)
-                </label>
-            </div>
-            <div class="form-group">
-                <label asp-for="CreatedAt" class="control-label"></label>
-                <input asp-for="CreatedAt" class="form-control" />
-                <span asp-validation-for="CreatedAt" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="UpdatedAt" class="control-label"></label>
-                <input asp-for="UpdatedAt" class="form-control" />
-                <span asp-validation-for="UpdatedAt" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
+</body>

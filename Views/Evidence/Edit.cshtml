@@ -4,58 +4,79 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
+<!DOCTYPE html>
+<html lang="en">
 
-<h4>Evidence</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="JobId" class="control-label"></label>
-                <select asp-for="JobId" class="form-control" asp-items="ViewBag.JobId"></select>
-                <span asp-validation-for="JobId" class="text-danger"></span>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@ViewData["Title"]</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100">
+    <div class="flex flex-col items-center w-full">
+        <div class="w-full pb-3 rounded-lg pt-6">
+            <div class="flex justify-between items-center">
+                <h1 class="text-3xl font-semibold">Edit Evidence:</h1>
+                <a class="bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600 transition duration-300"
+                    asp-action="Index">Back to Evidence List</a>
             </div>
-            <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+
+        <div class="w-full border p-4">
+            <div class="col-md-4">
+                <form asp-action="Edit">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Id" />
+                    <div class="flex flex-col gap-2">
+                        <div class="form-group">
+                            <label asp-for="JobId" class="control-label block text-xl font-semibold"></label>
+                            <select asp-for="JobId" class="form-control mt-1 w-full border rounded p-2 bg-gray-50"
+                                asp-items="ViewBag.JobId"></select>
+                            <span asp-validation-for="JobId" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Title" class="control-label block text-xl font-semibold"></label>
+                            <input asp-for="Title" class="form-control mt-1 w-full border rounded p-2 bg-gray-50" />
+                            <span asp-validation-for="Title" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Type" class="control-label block text-xl font-semibold"></label>
+                            <select asp-for="Type"
+                                class="form-control mt-1 w-full border rounded p-2 bg-gray-50"></select>
+                            <span asp-validation-for="Type" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Path" class="control-label block text-xl font-semibold"></label>
+                            <input asp-for="Path" class="form-control mt-1 w-full border rounded p-2 bg-gray-50" />
+                            <span asp-validation-for="Path" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Description" class="control-label block text-xl font-semibold"></label>
+                            <input asp-for="Description"
+                                class="form-control mt-1 w-full border rounded p-2 bg-gray-50" />
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="CreatedAt" class="control-label block text-xl font-semibold"></label>
+                            <input asp-for="CreatedAt" class="form-control mt-1 w-full border rounded p-2 bg-gray-50" />
+                            <span asp-validation-for="CreatedAt" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="UpdatedAt" class="control-label block text-xl font-semibold"></label>
+                            <input asp-for="UpdatedAt" class="form-control mt-1 w-full border rounded p-2 bg-gray-50" />
+                            <span asp-validation-for="UpdatedAt" class="text-danger"></span>
+                        </div>
+                        <div class="flex justify-center gap-2 pt-5">
+                            <div class="form-group">
+                                <input type="submit" value="Save"
+                                    class="btn btn-primary cursor-pointer bg-yellow-400 hover:bg-yellow-500 transition duration-300 text-black px-6 py-2 rounded" />
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <label asp-for="Type" class="control-label"></label>
-                <select asp-for="Type" class="form-control"></select>
-                <span asp-validation-for="Type" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Path" class="control-label"></label>
-                <input asp-for="Path" class="form-control" />
-                <span asp-validation-for="Path" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CreatedAt" class="control-label"></label>
-                <input asp-for="CreatedAt" class="form-control" />
-                <span asp-validation-for="CreatedAt" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="UpdatedAt" class="control-label"></label>
-                <input asp-for="UpdatedAt" class="form-control" />
-                <span asp-validation-for="UpdatedAt" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
+</body>
