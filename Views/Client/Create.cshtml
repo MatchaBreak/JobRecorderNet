@@ -27,7 +27,7 @@
             <div class="w-full">
                 <form asp-action="Create">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <div class="flex flex-col gap-4 border p-6 rounded-lg bg-white w-full">
+                    <div class="grid grid-cols-2 gap-4 border p-6 rounded-lg bg-white w-full">
                         <div class="form-group">
                             <label asp-for="Name" class="control-label block text-xl font-semibold "></label>
                             <input asp-for="Name" class="form-control mt-1 w-full border rounded p-2 bg-gray-50" />
@@ -58,8 +58,10 @@
                             <input asp-for="UpdatedAt" class="form-control mt-1 w-full border rounded p-2 bg-gray-50" />
                             <span asp-validation-for="UpdatedAt" class="text-danger"></span>
                         </div> *@
-                        <div class="flex form-group w-full justify-center">
-                            <input type="submit" value="Add Client" class="btn btn-primary cursor-pointer bg-green-600 hover:bg-green-700 transition duration-300 text-white px-6 py-2 rounded" />
+                        <div class="col-span-2">
+                            <div class="flex form-group w-full justify-center">
+                                <input type="submit" value="Add Client" class="btn btn-primary cursor-pointer bg-green-600 hover:bg-green-700 transition duration-300 text-white px-6 py-2 rounded" />
+                            </div>
                         </div>
                     </div>
                 </form>
