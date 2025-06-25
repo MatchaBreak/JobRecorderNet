@@ -38,6 +38,11 @@
         [Required]
         public bool IsMain { get; set; }
 
+        public override string ToString()
+        {
+            return $"{Name}, {Street} {Suburb}, {State}, {Postcode}";
+        }
+
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime? UpdatedAt { get; set; }
     }

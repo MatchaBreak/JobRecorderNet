@@ -53,8 +53,8 @@
                                 <td class="px-2 md:px-4 py-2 hidden md:table-cell max-w-[150px] truncate" title="@user.Mobile">
                                     <span class="block overflow-hidden whitespace-nowrap text-ellipsis">@user.Mobile</span>
                                 </td>
-                                <td class="px-2 md:px-4 py-2 hidden md:table-cell max-w-[200px] truncate" title="@user.Address">
-                                    <span class="block overflow-hidden whitespace-nowrap text-ellipsis">@user.Address</span>
+                                <td class="px-2 md:px-4 py-2 hidden md:table-cell max-w-[200px] truncate" title="@user.Address?.ToString() ?? "No Address Provided"">
+                                    <span class="block overflow-hidden whitespace-nowrap text-ellipsis">@user.Address?.ToString() ?? "No Address Provided"</span>
                                 </td>
                                 <td class="px-2 md:px-4 py-2 w-[1%] whitespace-nowrap">
                                     <div class="flex gap-1">
