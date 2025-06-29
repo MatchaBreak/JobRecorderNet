@@ -19,9 +19,51 @@ namespace JobRecorderNet.Controllers
         }
 
         // GET: Address
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string search, string column = "isMain")
         {
-            return View(await _context.Addresses.ToListAsync());
+             if (!string.IsNullOrEmpty(search)) search = search.ToLower();
+
+            var viewModel = new SearchBarViewModel
+            {
+                Title = "Addresses",
+                Search = search,
+                PlaceHolder = "Search Addresses...",
+                IndexRoute = Url.Action("Index", "Address"),
+                CreateRoute = Url.Action("Create", "Address"),
+                Columns = new Dictionary<string, string>
+                {
+                    {"all", "All"},
+                    {"addressName", "Address Name"},
+                    {"street", "Street"},
+                    {"suburb", "Suburb"},
+                    {"state", "State"},
+                    {"postcode", "Postcode"},
+                    {"IsMain", "Is Main"}
+                },
+                SelectedColumn = column
+
+            };
+
+            var usersQuery = _context.Addresses.AsQueryable();
+
+            if (!string.IsNullOrEmpty(search))
+            {
+                usersQuery = column switch
+                {
+                    "all" => usersQuery,
+                    "addressName" => usersQuery.Where(a => a.Name.ToLower().Contains(search)),
+                    "street" => usersQuery.Where(a => a.Street.ToLower().Contains(search)),
+                    "suburb" => usersQuery.Where(a => a.Suburb.ToLower().Contains(search)),
+                    "state" => usersQuery.Where(a => a.State.ToLower().Contains(search)),
+                    "postcode" => usersQuery.Where(a => a.Postcode.ToLower().Contains(search)),
+                    "IsMain" => usersQuery.Where(a => a.IsMain),
+                    _ => usersQuery.Where(a=>a.IsMain)
+                };
+            }
+            var addresses = await usersQuery.ToListAsync();
+
+            ViewData["SearchBarViewModel"] = viewModel;
+            return View(addresses);
         }
 
         // GET: Address/Details/5

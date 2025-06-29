@@ -21,7 +21,7 @@ namespace JobRecorderNet.Controllers
         // GET: User, also handles search + adding user button
        public async Task<IActionResult> Index(string search, string column = "all") // Default to "all"
         {
-            search = search?.ToLower();
+            if (!string.IsNullOrEmpty(search)) search = search.ToLower();
 
             var viewModel = new SearchBarViewModel
             {
@@ -53,17 +53,7 @@ namespace JobRecorderNet.Controllers
             {
                 usersQuery = column switch
                 {
-                    "all" => usersQuery.Where(u =>
-                        u.Name.ToLower().Contains(search) ||
-                        u.Email.ToLower().Contains(search) ||
-                        (u.Phone != null && u.Phone.ToLower().Contains(search)) ||
-                        u.Mobile.ToLower().Contains(search) ||
-                        u.Address.Name.ToLower().Contains(search) ||
-                        u.Address.Street.ToLower().Contains(search) ||
-                        u.Address.Suburb.ToLower().Contains(search) ||
-                        u.Address.State.ToLower().Contains(search) ||
-                        u.Address.Postcode.ToLower().Contains(search) ||
-                        u.Role.ToString().ToLower().Contains(search)),
+                    "all" => usersQuery,
                     "name" => usersQuery.Where(u => u.Name.ToLower().Contains(search)),
                     "email" => usersQuery.Where(u => u.Email.ToLower().Contains(search)),
                     "phone" => usersQuery.Where(u => u.Phone != null && u.Phone.ToLower().Contains(search)),

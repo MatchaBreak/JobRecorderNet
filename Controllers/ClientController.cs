@@ -21,7 +21,7 @@ namespace JobRecorderNet.Controllers
         // GET: Client
         public async Task<IActionResult> Index(string search, string column = "all")
         {
-            search = search?.ToLower();
+            if (!string.IsNullOrEmpty(search)) search = search.ToLower();
 
             var viewModel = new SearchBarViewModel
             {
@@ -32,7 +32,8 @@ namespace JobRecorderNet.Controllers
                 CreateRoute = Url.Action("Create", "Client"),
                 Columns = new Dictionary<string, String>
                 {
-                    {"name", "Name"},
+                    {"all", "All"}, // Add "all" as a filter option
+                    { "name", "Name"},
                     {"index", "Index"},
                     {"email", "Email"},
                     {"phone", "Phone"},
@@ -52,6 +53,7 @@ namespace JobRecorderNet.Controllers
             {
                 clientsQuery = column switch
                 {
+                    "all" => clientsQuery,
                     "name" => clientsQuery.Where(c => c.Name.ToLower().Contains(search)),
                     "email" => clientsQuery.Where(c => c.Email.ToLower().Contains(search)),
                     "phone" => clientsQuery.Where(c => c.Phone != null && c.Phone.ToLower().Contains(search)),
