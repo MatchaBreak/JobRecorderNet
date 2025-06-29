@@ -34,7 +34,7 @@ namespace JobRecorderNet.Models
         // Navigation property for related jobs
         public ICollection<Job> Jobs { get; set; } = new List<Job>();
 
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
         public DateTime? UpdatedAt { get; set; }
     }
 }

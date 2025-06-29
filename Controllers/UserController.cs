@@ -159,6 +159,9 @@ namespace JobRecorderNet.Controllers
             {
                 try
                 {
+                    // To enable UpdateAt
+                    user.UpdatedAt = DateTime.Now;
+                    
                     _context.Update(user);
                     await _context.SaveChangesAsync();
                 }
