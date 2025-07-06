@@ -175,22 +175,69 @@ namespace JobRecorderNet.Controllers
         // POST: Job/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,JobNo,Type,ClientId,SupervisorId,AddressId,Description,Status,CreatedAt,UpdatedAt")] Job job)
         {
             if (ModelState.IsValid)
             {
-                job.JobNo = GenerateJobNumber(); // Generate job number
-                job.CreatedAt = DateTime.Now; 
+                job.JobNo = GenerateJobNumber();
+                job.CreatedAt = DateTime.Now;
 
                 _context.Add(job);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AddressId"] = new SelectList(_context.Addresses, "Id", "Name", job.AddressId);
-            ViewData["ClientId"] = new SelectList(_context.Clients, "Id", "Name", job.ClientId);
-            ViewData["SupervisorId"] = new SelectList(_context.Users, "Id", "Name", job.SupervisorId);
+
+            // Repopulate dropdowns if model is invalid
+            var clients = _context.Clients
+                .Select(c => new
+                {
+                    c.Id,
+                    c.Name,
+                    Addresses = _context.Addresses
+                        .Where(a => a.ClientId == c.Id)
+                        .Select(a => new
+                        {
+                            a.Id,
+                            a.Name,
+                            Label = $"{a.Name}: {a.Street}, {a.Suburb}, {a.State} {a.Postcode}"
+                        })
+                        .ToList()
+                })
+                .ToList();
+
+            ViewBag.Clients = clients;
+            ViewBag.ClientId = new SelectList(clients, "Id", "Name", job.ClientId);
+
+            ViewBag.AddressId = _context.Addresses
+                .Where(a => a.ClientId == job.ClientId) // show only relevant addresses
+                .Select(a => new SelectListItem
+                {
+                    Value = a.Id.ToString(),
+                    Text = $"{a.Name}: {a.Street}, {a.Suburb}, {a.State} {a.Postcode}"
+                })
+                .ToList();
+
+            ViewBag.SupervisorId = new SelectList(_context.Users, "Id", "Name", job.SupervisorId);
+
+            ViewBag.Technicians = _context.Users
+                .Select(u => new SelectListItem
+                {
+                    Value = u.Id.ToString(),
+                    Text = u.Name
+                })
+                .ToList();
+
+            ViewBag.JobType = Enum.GetValues(typeof(JobType))
+                .Cast<JobType>()
+                .Select(e => new SelectListItem
+                {
+                    Value = e.ToString(),
+                    Text = e.ToString()
+                })
+                .ToList();
+
+            ViewBag.JobNumber = job.JobNo; // Keep generated number visible
+
             return View(job);
         }
 
@@ -202,14 +249,66 @@ namespace JobRecorderNet.Controllers
                 return NotFound();
             }
 
-            var job = await _context.Jobs.FindAsync(id);
+            var job = await _context.Jobs
+                .Include(j => j.Address)
+                .Include(j => j.Client)
+                .Include(j => j.Supervisor)
+                .FirstOrDefaultAsync(j => j.Id == id);
+
             if (job == null)
             {
                 return NotFound();
             }
-            ViewData["AddressId"] = new SelectList(_context.Addresses, "Id", "Name", job.AddressId);
-            ViewData["ClientId"] = new SelectList(_context.Clients, "Id", "Email", job.ClientId);
-            ViewData["SupervisorId"] = new SelectList(_context.Users, "Id", "Address", job.SupervisorId);
+
+            // Populate ViewBag for dropdowns
+            var clients = _context.Clients
+                .Select(c => new
+                {
+                    c.Id,
+                    c.Name,
+                    Addresses = _context.Addresses
+                        .Where(a => a.ClientId == c.Id)
+                        .Select(a => new
+                        {
+                            a.Id,
+                            a.Name,
+                            Label = $"{a.Name}: {a.Street}, {a.Suburb}, {a.State} {a.Postcode}"
+                        })
+                        .ToList()
+                })
+                .ToList();
+
+            ViewBag.Clients = clients;
+            ViewBag.ClientId = new SelectList(clients, "Id", "Name", job.ClientId);
+
+            ViewBag.AddressId = _context.Addresses
+                .Where(a => a.ClientId == job.ClientId) // Show only relevant addresses
+                .Select(a => new SelectListItem
+                {
+                    Value = a.Id.ToString(),
+                    Text = $"{a.Name}: {a.Street}, {a.Suburb}, {a.State} {a.Postcode}"
+                })
+                .ToList();
+
+            ViewBag.SupervisorId = new SelectList(_context.Users, "Id", "Name", job.SupervisorId);
+
+            ViewBag.Technicians = _context.Users
+                .Select(u => new SelectListItem
+                {
+                    Value = u.Id.ToString(),
+                    Text = u.Name
+                })
+                .ToList();
+
+            ViewBag.JobType = Enum.GetValues<JobType>()
+                .Cast<JobType>()    // Projects eeach num value into a SelectListItem object
+                .Select(e => new SelectListItem
+                {
+                    Value = e.ToString(),
+                    Text = e.ToString()
+                })
+                .ToList();
+
             return View(job);
         }
 
@@ -229,6 +328,9 @@ namespace JobRecorderNet.Controllers
             {
                 try
                 {
+                    // Update timestamp
+                    job.UpdatedAt = DateTime.Now;
+
                     _context.Update(job);
                     await _context.SaveChangesAsync();
                 }
@@ -238,13 +340,59 @@ namespace JobRecorderNet.Controllers
                     {
                         return NotFound();
                     }
-    
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AddressId"] = new SelectList(_context.Addresses, "Id", "Name", job.AddressId);
-            ViewData["ClientId"] = new SelectList(_context.Clients, "Id", "Email", job.ClientId);
-            ViewData["SupervisorId"] = new SelectList(_context.Users, "Id", "Address", job.SupervisorId);
+
+            // Repopulate dropdowns if ModelState is invalid
+            var clients = _context.Clients
+                .Select(c => new
+                {
+                    c.Id,
+                    c.Name,
+                    Addresses = _context.Addresses
+                        .Where(a => a.ClientId == c.Id)
+                        .Select(a => new
+                        {
+                            a.Id,
+                            a.Name,
+                            Label = $"{a.Name}: {a.Street}, {a.Suburb}, {a.State} {a.Postcode}"
+                        })
+                        .ToList()
+                })
+                .ToList();
+
+            ViewBag.Clients = clients;
+            ViewBag.ClientId = new SelectList(clients, "Id", "Name", job.ClientId);
+
+            ViewBag.AddressId = _context.Addresses
+                .Where(a => a.ClientId == job.ClientId) // Show only relevant addresses
+                .Select(a => new SelectListItem
+                {
+                    Value = a.Id.ToString(),
+                    Text = $"{a.Name}: {a.Street}, {a.Suburb}, {a.State} {a.Postcode}"
+                })
+                .ToList();
+
+            ViewBag.SupervisorId = new SelectList(_context.Users, "Id", "Name", job.SupervisorId);
+
+            ViewBag.Technicians = _context.Users
+                .Select(u => new SelectListItem
+                {
+                    Value = u.Id.ToString(),
+                    Text = u.Name
+                })
+                .ToList();
+
+            ViewBag.JobType = Enum.GetValues<JobType>()
+                .Cast<JobType>()
+                .Select(e => new SelectListItem
+                {
+                    Value = e.ToString(),
+                    Text = e.ToString()
+                })
+                .ToList();
+
             return View(job);
         }
 
