@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -18,11 +14,88 @@ namespace JobRecorderNet.Controllers
             _context = context;
         }
 
-        // GET: Job
-        public async Task<IActionResult> Index()
+        protected string GenerateJobNumber()
         {
-            var applicationDbContext = _context.Jobs.Include(j => j.Address).Include(j => j.Client).Include(j => j.Supervisor);
-            return View(await applicationDbContext.ToListAsync());
+            //use CreatedAt
+            int year = DateTime.Now.Year % 100;
+            int quarter = (DateTime.Now.Month - 1) / 3 + 1;
+            int jobCount = _context.Jobs.Count(j => j.CreatedAt.Year == year && (j.CreatedAt.Month - 1) / 3 + 1 == quarter);
+            jobCount++;
+            return $"J{year}{quarter}{jobCount:D3}";
+        }
+
+        // GET: Job
+        public async Task<IActionResult> Index(string search, string column = "all")
+        {
+            if (!string.IsNullOrEmpty(search)) search = search.ToLower();
+
+            var viewModel = new SearchBarViewModel
+            {
+                Title = "Jobs",
+                Search = search,
+                PlaceHolder = "Search Jobs...",
+                IndexRoute = Url.Action("Index", "Job") ?? throw new InvalidOperationException(),
+                CreateRoute = Url.Action("Create", "Job") ?? throw new InvalidOperationException(),
+                Columns = new Dictionary<string, string>
+                {
+                    {"all", "All"}, // Add "all" as a filter option
+                    {"jobNo", "Job No"},
+                    {"type", "Type"},
+                    {"clientName", "Client Name"},
+                    {"supervisorName", "Supervisor Name"},
+                    {"addressName", "Address Name"},
+                    {"street", "Street"},
+                    {"suburb", "Suburb"},
+                    {"state", "State"},
+                    {"postcode", "Postcode"},
+                    {"description", "Description"},
+                    {"status", "Status"}
+                },
+                SelectedColumn = column
+            };
+
+            var jobsQuery = _context.Jobs
+                .Include(j => j.Address)
+                .Include(j => j.Client)
+                .Include(j => j.Supervisor)
+                .AsQueryable();
+
+            if (!string.IsNullOrEmpty(search))
+            {
+                jobsQuery = column switch
+                {
+                    "all" => jobsQuery.Where(j =>
+                        j.JobNo.ToLower().Contains(search) ||
+                        j.Type.ToString().ToLower().Contains(search) ||
+                        j.Client.Name.ToLower().Contains(search) ||
+                        j.Supervisor.Name.ToLower().Contains(search) ||
+                        (j.Address != null && (j.Address.Name.ToLower().Contains(search) ||
+                                               j.Address.Street.ToLower().Contains(search) ||
+                                               j.Address.Suburb.ToLower().Contains(search) ||
+                                               j.Address.State.ToLower().Contains(search) ||
+                                               j.Address.Postcode.ToLower().Contains(search))) ||
+                        (j.Description != null && j.Description.ToLower().Contains(search)) ||
+                        j.Status.ToString().ToLower().Contains(search)),
+                    "jobNo" => jobsQuery.Where(j => j.JobNo.ToLower().Contains(search)),
+                    "type" => jobsQuery.Where(j => j.Type.ToString().ToLower().Contains(search)),
+                    "clientName" => jobsQuery.Where(j => j.Client.Name.ToLower().Contains(search)),
+                    "supervisorName" => jobsQuery.Where(j => j.Supervisor.Name.ToLower().Contains(search)),
+                    "addressName" => jobsQuery.Where(j => j.Address.Name.ToLower().Contains(search)),
+                    "street" => jobsQuery.Where(j => j.Address.Street.ToLower().Contains(search)),
+                    "suburb" => jobsQuery.Where(j => j.Address.Suburb.ToLower().Contains(search)),
+                    "state" => jobsQuery.Where(j => j.Address.State.ToLower().Contains(search)),
+                    "postcode" => jobsQuery.Where(j => j.Address.Postcode.ToLower().Contains(search)),
+                    "description" => jobsQuery.Where(j => (j.Description != null && j.Description.ToLower().Contains(search))),
+                    "status" => jobsQuery.Where(j => j.Status.ToString().ToLower().Contains(search)),
+                    _ => jobsQuery
+                };
+            }
+
+            var jobs = await jobsQuery.ToListAsync();
+
+            ViewData["SearchBarViewModel"] = viewModel;
+            return View(jobs);
+
         }
 
         // GET: Job/Details/5
@@ -49,9 +122,53 @@ namespace JobRecorderNet.Controllers
         // GET: Job/Create
         public IActionResult Create()
         {
-            ViewData["AddressId"] = new SelectList(_context.Addresses, "Id", "Name");
-            ViewData["ClientId"] = new SelectList(_context.Clients, "Id", "Email");
-            ViewData["SupervisorId"] = new SelectList(_context.Users, "Id", "Address");
+            // Fetch clients and their addresses
+            var clients = _context.Clients
+                .Select(c => new
+                {
+                    c.Id,
+                    c.Name,
+                    Addresses = _context.Addresses
+                        .Where(a => a.ClientId == c.Id)
+                        .Select(a => new
+                        {
+                            a.Id,
+                            a.Name,
+                            Label = $"{a.Name}: {a.Street}, {a.Suburb}, {a.State} {a.Postcode}"
+                        })
+                        .ToList()
+                })
+                .ToList();
+            ViewBag.Clients = clients;
+            ViewBag.ClientId = new SelectList(clients, "Id", "Name");
+            // For addresses
+            ViewBag.AddressId = new List<SelectListItem>();
+
+            //Supervisor 
+            ViewBag.SupervisorId = new SelectList(_context.Users, "Id", "Name");
+
+            //technicians 
+            ViewBag.Technicians = _context.Users
+                .Select(u => new SelectListItem
+                {
+                    Value = u.Id.ToString(),
+                    Text = u.Name
+                })
+                .ToList(); 
+                
+
+            // Populates JobType dropdown using enum in Job model file
+            ViewBag.JobType = Enum.GetValues(typeof(JobType))
+                .Cast<JobType>()
+                .Select(e => new SelectListItem
+                {
+                    Value = e.ToString(),
+                    Text = e.ToString()
+                })
+                .ToList();
+
+            // Prepopulate the JobNo field with a generated job number
+            ViewBag.JobNumber = GenerateJobNumber();
             return View();
         }
 
@@ -64,13 +181,16 @@ namespace JobRecorderNet.Controllers
         {
             if (ModelState.IsValid)
             {
+                job.JobNo = GenerateJobNumber(); // Generate job number
+                job.CreatedAt = DateTime.Now; 
+
                 _context.Add(job);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             ViewData["AddressId"] = new SelectList(_context.Addresses, "Id", "Name", job.AddressId);
-            ViewData["ClientId"] = new SelectList(_context.Clients, "Id", "Email", job.ClientId);
-            ViewData["SupervisorId"] = new SelectList(_context.Users, "Id", "Address", job.SupervisorId);
+            ViewData["ClientId"] = new SelectList(_context.Clients, "Id", "Name", job.ClientId);
+            ViewData["SupervisorId"] = new SelectList(_context.Users, "Id", "Name", job.SupervisorId);
             return View(job);
         }
 
@@ -118,10 +238,7 @@ namespace JobRecorderNet.Controllers
                     {
                         return NotFound();
                     }
-                    else
-                    {
-                        throw;
-                    }
+    
                 }
                 return RedirectToAction(nameof(Index));
             }

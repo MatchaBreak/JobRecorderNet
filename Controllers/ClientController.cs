@@ -28,13 +28,12 @@ namespace JobRecorderNet.Controllers
                 Title = "Clients",
                 Search = search,
                 PlaceHolder = "Search Clients...",
-                IndexRoute = Url.Action("Index", "Client"),
-                CreateRoute = Url.Action("Create", "Client"),
+                IndexRoute = Url.Action("Index", "Client") ?? throw new InvalidOperationException(),
+                CreateRoute = Url.Action("Create", "Client") ?? throw new InvalidOperationException(),
                 Columns = new Dictionary<string, String>
                 {
                     {"all", "All"}, // Add "all" as a filter option
-                    { "name", "Name"},
-                    {"index", "Index"},
+                    {"name", "Name"},
                     {"email", "Email"},
                     {"phone", "Phone"},
                     {"mobile", "Mobile"},
@@ -53,7 +52,17 @@ namespace JobRecorderNet.Controllers
             {
                 clientsQuery = column switch
                 {
-                    "all" => clientsQuery,
+                    "all" => clientsQuery.Where(u => 
+                        u.Name.ToLower().Contains(search) ||
+                        u.Email.ToLower().Contains(search) ||
+                        (u.Phone != null && u.Phone.ToLower().Contains(search)) ||
+                        u.Mobile.ToLower().Contains(search) ||
+                        // Multiple addresses
+                        u.Addresses.Any(a => a.Name.ToLower().Contains(search) ||
+                                             a.Street.ToLower().Contains(search) ||
+                                             a.Suburb.ToLower().Contains(search) ||
+                                             a.State.ToLower().Contains(search) ||
+                                             a.Postcode.ToLower().Contains(search))),
                     "name" => clientsQuery.Where(c => c.Name.ToLower().Contains(search)),
                     "email" => clientsQuery.Where(c => c.Email.ToLower().Contains(search)),
                     "phone" => clientsQuery.Where(c => c.Phone != null && c.Phone.ToLower().Contains(search)),

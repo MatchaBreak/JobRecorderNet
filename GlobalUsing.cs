@@ -1,4 +1,3 @@
-﻿global using System.Collections.Generic;
+﻿// Globally shared libraries
+global using System.Collections.Generic;
 global using System.ComponentModel.DataAnnotations;
-global using System.ComponentModel.DataAnnotations.Schema;
-global using System.Linq;

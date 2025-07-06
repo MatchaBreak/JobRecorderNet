@@ -1,86 +1,117 @@
 @model JobRecorderNet.Models.Job
 
-@{
-    ViewData["Title"] = "Create";
-}
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>@ViewData["Title"]</title>
+    <title>Create Job</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-
 <body class="bg-gray-100">
     <div class="flex flex-col items-center w-full">
-        <div class="w-full pb-3 rounded-lg pt-6">
-        <div class="flex justify-between items-center">
-            <h1 class="text-3xl font-semibold">Create Job</h1>
-            <a class="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600 transition duration-300"
-                asp-action="Index">Back to Jobs</a>
+        <div class="flex flex-col md:flex-row justify-between items-center w-full px-4 md:px-12 pt-6 gap-4">
+            <h1 class="text-2xl md:text-3xl font-semibold text-gray-800">Create Job</h1>
+            <a asp-action="Index" class="bg-blue-500 hover:bg-blue-600 transition duration-300 text-white px-4 md:px-6 py-2 rounded">Back To Jobs</a>
         </div>
-    </div>
 
-    <div class="w-full">
-        <div class="w-full">
-            <form asp-action="Create">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="grid grid-cols-2 gap-4 border p-6 rounded-lg bg-white w-full">
-                    <div class="form-group">
-                        <label asp-for="JobNo" class="control-label block text-xl font-semibold"></label>
-                        <input asp-for="JobNo" class="form-control mt-1 w-full border rounded p-2 bg-gray-50" />
-                        <span asp-validation-for="JobNo" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Type" class="control-label block text-xl font-semibold"></label>
-                        <select asp-for="Type" class="form-control mt-1 w-full border rounded p-2 bg-gray-50"></select>
-                        <span asp-validation-for="Type" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="ClientId" class="control-label block text-xl font-semibold"></label>
-                        <select asp-for="ClientId" class="form-control mt-1 w-full border rounded p-2 bg-gray-50" asp-items="ViewBag.ClientId"></select>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="SupervisorId" class="control-label block text-xl font-semibold"></label>
-                        <select asp-for="SupervisorId" class="form-control mt-1 w-full border rounded p-2 bg-gray-50" asp-items="ViewBag.SupervisorId"></select>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="AddressId" class="control-label block text-xl font-semibold"></label>
-                        <select asp-for="AddressId" class="form-control mt-1 w-full border rounded p-2 bg-gray-50" asp-items="ViewBag.AddressId"></select>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Description" class="control-label block text-xl font-semibold"></label>
-                        <input asp-for="Description" class="form-control mt-1 w-full border rounded p-2 bg-gray-50" />
-                        <span asp-validation-for="Description" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Status" class="control-label block text-xl font-semibold"></label>
-                        <select asp-for="Status" class="form-control mt-1 w-full border rounded p-2 bg-gray-50"></select>
-                        <span asp-validation-for="Status" class="text-danger"></span>
-                    </div>
-                    @* <div class="form-group">
-                        <label asp-for="CreatedAt" class="control-label block text-xl font-semibold"></label>
-                        <input asp-for="CreatedAt" class="form-control mt-1 w-full border rounded p-2 bg-gray-50" />
-                        <span asp-validation-for="CreatedAt" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="UpdatedAt" class="control-label block text-xl font-semibold"></label>
-                        <input asp-for="UpdatedAt" class="form-control mt-1 w-full border rounded p-2 bg-gray-50" />
-                        <span asp-validation-for="UpdatedAt" class="text-danger"></span>
-                    </div> *@
-                    <div class="col-span-2">
-                        <div class="flex form-group w-full justify-center">
-                            <input type="submit" value="Add Job" class="btn btn-primary cursor-pointer bg-green-600 hover:bg-green-700 transition duration-300 text-white px-6 py-2 rounded" />
-                        </div>
-                    </div>
+        <div class="w-full px-2 md:px-12">
+            <form asp-action="Create" method="post" class="space-y-6">
+                @* Main form container *@
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 border p-4 md:p-6 rounded-lg bg-white">
                     
+                    @* Job Number Preview *@
+                    <div>
+                        <label class="block text-lg font-semibold">Job Number Preview</label>
+                        <input name="JobNo" value="@ViewBag.JobNumber" class="mt-1 w-full border rounded p-2 bg-gray-50" readonly />
+                    </div>
+
+                    @* Job Type *@
+                    <div>
+                        <label class="block text-lg font-semibold">Job Type</label>
+                        <select asp-for="Type" class="mt-1 w-full border rounded p-2.5 bg-gray-50" asp-items="ViewBag.JobType"></select>
+                    </div>
+
+                    @* Supervisor *@
+                    <div class="relative">
+                        <label class="block text-xl font-semibold">Supervisor</label>
+                        <div class="flex">
+                            <input id="supervisor-search" list="supervisor-list" placeholder="Type to Search..." class="mt-1 flex-1 border rounded-l h-11 p-2 focus:outline-none">
+                            <button id="supervisor-add-btn" type="button" class="mt-1 bg-blue-500 hover:bg-blue-600 text-white h-11 px-4 rounded-r">Select</button>
+                        </div>
+                        <datalist id="supervisor-list">
+                            @foreach (var supervisor in ViewBag.SupervisorId as IEnumerable<SelectListItem>)
+                            {
+                                <option value="@supervisor.Text" data-id="@supervisor.Value"></option>
+                            }
+                        </datalist>
+                        <div id="supervisor-tag" class="flex flex-wrap gap-2 mt-3"></div>
+                    </div>
+
+                    @* Technicians *@
+                    <div class="relative">
+                        <label class="block text-xl font-semibold">Technicians</label>
+                        <div class="flex">
+                            <input id="tech-search" list="tech-list" placeholder="Type To Search..." class="mt-1 flex-1 border rounded-l h-11 p-2 focus:outline-none">
+                            <button id="tech-add-btn" type="button" class="mt-1 bg-blue-500 hover:bg-blue-600 text-white h-11 px-4 rounded-r">Add</button>
+                        </div>
+                        <datalist id="tech-list">
+                            @foreach (var technician in ViewBag.Technicians as IEnumerable<SelectListItem>)
+                            {
+                                <option value="@technician.Text" data-id="@technician.Value"></option>
+                            }
+                        </datalist>
+                        <div id="tech-tags" class="flex flex-wrap gap-2 mt-3"></div>
+                    </div>
+
+                    @* Client *@
+                    <div class="relative">
+                        <label class="block text-xl font-semibold">Client</label>
+                        <div class="flex">
+                            <input id="client-search" list="client-list" placeholder="Type to Search..." class="mt-1 flex-1 border rounded-l p-2 h-11 focus:outline-none">
+                            <button id="client-add-btn" type="button" class="mt-1 bg-purple-500 hover:bg-purple-600 text-white px-4 h-11 rounded-r">Select</button>
+                        </div>
+                        <datalist id="client-list">
+                            @foreach (var client in ViewBag.Clients)
+                            {
+                                <option value="@client.Name" data-id="@client.Id"></option>
+                            }
+                        </datalist>
+                        <div id="client-tag" class="flex flex-wrap gap-2 mt-3"></div>
+                    </div>
+
+                    @* Client Address *@
+                    <div>
+                        <label class="block text-xl font-semibold">Client Address</label>
+                        <select id="address-dropdown" asp-for="AddressId" class="mt-1 w-full border rounded p-2 bg-gray-50">
+                            <option value="">— Select Address —</option>
+                        </select>
+                    </div>
+
+                    @* Status *@
+                    <div>
+                        <label class="block text-lg font-semibold">Status</label>
+                        <select asp-for="Status" class="mt-1 w-full border rounded p-2.5 bg-gray-50">
+                            <option value="Pending">Pending</option>
+                            <option value="Completed">Completed</option>
+                        </select>
+                    </div>
+
+                    @* Description *@
+                    <div class="col-span-1 md:col-span-2">
+                        <label class="block text-lg font-semibold">Description (Optional)</label>
+                        <textarea asp-for="Description" class="mt-1 w-full border rounded p-2 bg-gray-50" maxlength="255" rows="2"></textarea>
+                    </div>
                 </div>
 
+                @* Submit Button *@
+                <div class="flex justify-center gap-2">
+                    <button type="submit" class="bg-yellow-400 hover:bg-yellow-500 transition duration-300 text-black px-6 py-2 rounded">Create Job</button>
+                </div>
             </form>
         </div>
     </div>
-    </div>
+
+    <script type="module" src="/js/job.js"></script>
 </body>
+</html>

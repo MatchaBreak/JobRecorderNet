@@ -1,9 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using JobRecorderNet.Models;
 
@@ -28,8 +24,8 @@ namespace JobRecorderNet.Controllers
                 Title = "Addresses",
                 Search = search,
                 PlaceHolder = "Search Addresses...",
-                IndexRoute = Url.Action("Index", "Address"),
-                CreateRoute = Url.Action("Create", "Address"),
+                IndexRoute = Url.Action("Index", "Address") ?? throw new InvalidOperationException(),
+                CreateRoute = Url.Action("Create", "Address") ?? throw new InvalidOperationException(),
                 Columns = new Dictionary<string, string>
                 {
                     {"all", "All"},

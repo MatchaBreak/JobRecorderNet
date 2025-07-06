@@ -1,6 +1,7 @@
 @model IEnumerable<JobRecorderNet.Models.Job>
 
 @{
+    var SearchBarViewModel = ViewData["SearchBarViewModel"] as JobRecorderNet.Models.SearchBarViewModel;
     ViewData["Title"] = "Index";
 }
 
@@ -17,10 +18,8 @@
 
 <body class="bg-gray-100">
     <div class="flex flex-col items-center w-full">
-        @* @await Html.PartialAsync("ui/_PageHeader", SearchBarViewModel) *@
-        <p>
-            <a asp-action="Create">Create New (Placeholder)</a>
-        </p>
+        @await Html.PartialAsync("ui/_PageHeader", SearchBarViewModel) 
+      
         <div class="w-full py-6 overflow-x-auto">
             <table class="min-w-full bg-white shadow rounded-lg overflow-hidden table-fixed">
                 <thead class="bg-gray-200">

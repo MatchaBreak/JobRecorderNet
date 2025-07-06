@@ -1,9 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using JobRecorderNet.Models;
 
@@ -28,8 +23,8 @@ namespace JobRecorderNet.Controllers
                 Title = "Users",
                 Search = search,
                 PlaceHolder = "Search Users...",
-                IndexRoute = Url.Action("Index", "User"),
-                CreateRoute = Url.Action("Create", "User"),
+                IndexRoute = Url.Action("Index", "User") ?? throw new InvalidOperationException(),
+                CreateRoute = Url.Action("Create", "User")?? throw new InvalidOperationException(),
                 Columns = new Dictionary<string, string>
                 {
                     {"all", "All"}, // Add "all" as a filter option
@@ -53,7 +48,17 @@ namespace JobRecorderNet.Controllers
             {
                 usersQuery = column switch
                 {
-                    "all" => usersQuery,
+                    "all" => usersQuery.Where(u =>
+                        u.Name.ToLower().Contains(search) ||
+                        u.Email.ToLower().Contains(search) ||
+                        (u.Phone != null && u.Phone.ToLower().Contains(search)) ||
+                        u.Mobile.ToLower().Contains(search) ||
+                        u.Address.Name.ToLower().Contains(search) ||
+                        u.Address.Street.ToLower().Contains(search) ||
+                        u.Address.Suburb.ToLower().Contains(search) ||
+                        u.Address.State.ToLower().Contains(search) ||
+                        u.Address.Postcode.ToLower().Contains(search) ||
+                        u.Role.ToString().ToLower().Contains(search)),
                     "name" => usersQuery.Where(u => u.Name.ToLower().Contains(search)),
                     "email" => usersQuery.Where(u => u.Email.ToLower().Contains(search)),
                     "phone" => usersQuery.Where(u => u.Phone != null && u.Phone.ToLower().Contains(search)),
