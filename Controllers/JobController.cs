@@ -119,6 +119,22 @@ namespace JobRecorderNet.Controllers
             return View(job);
         }
 
+        [HttpGet]
+        public IActionResult GetAddressesByClientId(int clientId)
+        {
+            var addresses = _context.Addresses
+                .Where(a => a.ClientId == clientId)
+                .Select(a => new
+                {
+                    a.Id,
+                    Label = $"{a.Name}: {a.Street}, {a.Suburb}, {a.State} {a.Postcode}"
+                })
+                .ToList();
+
+            return Json(addresses);
+        }
+
+
         // GET: Job/Create
         public IActionResult Create()
         {
@@ -154,8 +170,8 @@ namespace JobRecorderNet.Controllers
                     Value = u.Id.ToString(),
                     Text = u.Name
                 })
-                .ToList(); 
-                
+                .ToList();
+
 
             // Populates JobType dropdown using enum in Job model file
             ViewBag.JobType = Enum.GetValues(typeof(JobType))
@@ -177,16 +193,35 @@ namespace JobRecorderNet.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,JobNo,Type,ClientId,SupervisorId,AddressId,Description,Status,CreatedAt,UpdatedAt")] Job job)
+        public async Task<IActionResult> Create(Job job, [FromForm] List<int> TechnicianIds)
         {
+            
             if (ModelState.IsValid)
             {
                 job.JobNo = GenerateJobNumber();
                 job.CreatedAt = DateTime.Now;
+                job.UpdatedAt = DateTime.Now;
+
+                if (TechnicianIds != null && TechnicianIds.Count > 0)
+                {
+                    job.Technicians = await _context.Users
+                        .Where(u => TechnicianIds.Contains(u.Id))
+                        .ToListAsync();
+                }
 
                 _context.Add(job);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                foreach (var error in ModelState)
+                {
+                    foreach (var subError in error.Value.Errors)
+                    {
+                        Console.WriteLine($"Model error in '{error.Key}': {subError.ErrorMessage}");
+                    }
+                }
             }
 
             // Repopulate dropdowns if model is invalid
@@ -211,7 +246,7 @@ namespace JobRecorderNet.Controllers
             ViewBag.ClientId = new SelectList(clients, "Id", "Name", job.ClientId);
 
             ViewBag.AddressId = _context.Addresses
-                .Where(a => a.ClientId == job.ClientId) // show only relevant addresses
+                .Where(a => a.ClientId == job.ClientId)
                 .Select(a => new SelectListItem
                 {
                     Value = a.Id.ToString(),
@@ -238,7 +273,7 @@ namespace JobRecorderNet.Controllers
                 })
                 .ToList();
 
-            ViewBag.JobNumber = job.JobNo; // Keep generated number visible
+            ViewBag.JobNumber = job.JobNo;
 
             return View(job);
         }
@@ -319,7 +354,7 @@ namespace JobRecorderNet.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,JobNo,Type,ClientId,SupervisorId,AddressId,Description,Status,CreatedAt,UpdatedAt")] Job job)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Type,ClientId,SupervisorId,AddressId,Description,Status,CreatedAt,UpdatedAt")] Job job)
         {
             if (id != job.Id)
             {

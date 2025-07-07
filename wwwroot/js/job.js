@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Client Dropdown + Address Mapping 
-    const addressSelect = document.querySelector('select[name="address_id"]');
+    const addressSelect = document.querySelector('select[name="AddressId"]');
     // Client (Search + Tag, one only)
     const clientSearch   = document.getElementById('client-search');
     const clientAddBtn   = document.getElementById('client-add-btn');
@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
         tag.innerHTML = `
             ${name}
             <button type="button" class="ml-2 text-xl leading-none remove-client">&times;</button>
-            <input type="hidden" name="client_id" value="${id}" data-id="${id}">
+            <input type="hidden" name="ClientId" value="${id}" data-id="${id}">
         `;
         clientTagWrap.appendChild(tag);
     }
@@ -31,15 +31,22 @@ document.addEventListener('DOMContentLoaded', () => {
         const clientId = option.dataset.id;
         setClient(name, clientId);
         clientSearch.value = '';
-    
-        const addresses = window.addressMap?.[clientId] || [];
-        addressSelect.innerHTML = '<option value="">— Select Address —</option>';
-        addresses.forEach(function (addr) {
-            const option = document.createElement('option');
-            option.value = addr.id;                     
-            option.textContent = addr.label;            
-            addressSelect.appendChild(option);
-        });
+        
+        // Fetch addresses dynamically from the server
+        fetch(`/Job/GetAddressesByClientId?clientId=${clientId}`)
+            .then(res => res.json())
+            .then(addresses => {
+                addressSelect.innerHTML = '<option value="">— Select Address —</option>';
+                addresses.forEach(function (addr) {
+                    const option = document.createElement('option');
+                    option.value = addr.id;
+                    option.textContent = addr.label;
+                    addressSelect.appendChild(option);
+                });
+            })
+            .catch(err => {
+                console.error('Error loading addresses:', err);
+            });
         
     });
     
@@ -70,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
         tag.innerHTML = `
             ${name}
             <button type="button" class="ml-2 text-xl leading-none remove-tech">&times;</button>
-            <input type="hidden" name="technician_ids[]" value="${id}" data-id="${id}">
+            <input type="hidden" name="TechnicianIds[]" value="${id}" data-id="${id}">
         `;
         techTagWrap.appendChild(tag);
     }
@@ -110,7 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
         tag.innerHTML = `
             ${name}
             <button type="button" class="ml-2 text-xl leading-none remove-supervisor">&times;</button>
-            <input type="hidden" name="supervisor_id" value="${id}" data-id="${id}">
+            <input type="hidden" name="SupervisorId" value="${id}" data-id="${id}">
         `;
         supTagWrap.appendChild(tag);
     }

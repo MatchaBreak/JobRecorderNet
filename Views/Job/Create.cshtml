@@ -32,9 +32,35 @@
                         <select asp-for="Type" class="mt-1 w-full border rounded p-2.5 bg-gray-50" asp-items="ViewBag.JobType"></select>
                     </div>
 
+                    @* Client *@
+                    <div class="relative">
+                        <label asp-for="ClientId" class="block text-xl font-semibold">Client</label>
+                        <div class="flex">
+                            <input id="client-search" list="client-list" placeholder="Type to Search..." class="mt-1 flex-1 border rounded-l p-2 h-11 focus:outline-none">
+                            <button id="client-add-btn" type="button" class="mt-1 bg-purple-500 hover:bg-purple-600 text-white px-4 h-11 rounded-r">Select</button>
+                        </div>
+                        <datalist id="client-list">
+                            @foreach (var client in ViewBag.Clients)
+                            {
+                                <option value="@client.Name" data-id="@client.Id"></option>
+                            }
+                        </datalist>
+                        <div id="client-tag" class="flex flex-wrap gap-2 mt-3"></div>
+                        @Html.ValidationMessageFor(model => model.ClientId, "text-red-600 text-sm")
+                    </div>
+
+                    @* Client Address *@
+                    <div>
+                        <label asp-for="AddressId" class="block text-xl font-semibold">Client Address</label>
+                        <select id="address-dropdown" asp-for="AddressId" class="mt-1 w-full border rounded p-2 bg-gray-50">
+                            <option value="">— Select Address —</option>
+                        </select>
+                        @Html.ValidationMessageFor(model => model.AddressId, "text-red-600 text-sm")
+                    </div>
+
                     @* Supervisor *@
                     <div class="relative">
-                        <label class="block text-xl font-semibold">Supervisor</label>
+                        <label asp-for="SupervisorId" class="block text-xl font-semibold">Supervisor</label>
                         <div class="flex">
                             <input id="supervisor-search" list="supervisor-list" placeholder="Type to Search..." class="mt-1 flex-1 border rounded-l h-11 p-2 focus:outline-none">
                             <button id="supervisor-add-btn" type="button" class="mt-1 bg-blue-500 hover:bg-blue-600 text-white h-11 px-4 rounded-r">Select</button>
@@ -46,6 +72,7 @@
                             }
                         </datalist>
                         <div id="supervisor-tag" class="flex flex-wrap gap-2 mt-3"></div>
+                        @Html.ValidationMessageFor(model => model.SupervisorId, "text-red-600 text-sm")
                     </div>
 
                     @* Technicians *@
@@ -62,30 +89,6 @@
                             }
                         </datalist>
                         <div id="tech-tags" class="flex flex-wrap gap-2 mt-3"></div>
-                    </div>
-
-                    @* Client *@
-                    <div class="relative">
-                        <label class="block text-xl font-semibold">Client</label>
-                        <div class="flex">
-                            <input id="client-search" list="client-list" placeholder="Type to Search..." class="mt-1 flex-1 border rounded-l p-2 h-11 focus:outline-none">
-                            <button id="client-add-btn" type="button" class="mt-1 bg-purple-500 hover:bg-purple-600 text-white px-4 h-11 rounded-r">Select</button>
-                        </div>
-                        <datalist id="client-list">
-                            @foreach (var client in ViewBag.Clients)
-                            {
-                                <option value="@client.Name" data-id="@client.Id"></option>
-                            }
-                        </datalist>
-                        <div id="client-tag" class="flex flex-wrap gap-2 mt-3"></div>
-                    </div>
-
-                    @* Client Address *@
-                    <div>
-                        <label class="block text-xl font-semibold">Client Address</label>
-                        <select id="address-dropdown" asp-for="AddressId" class="mt-1 w-full border rounded p-2 bg-gray-50">
-                            <option value="">— Select Address —</option>
-                        </select>
                     </div>
 
                     @* Status *@
