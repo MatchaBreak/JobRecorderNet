@@ -25,9 +25,9 @@
                     <tr>
                         <th class="px-2 md:px-4 py-2 text-left">Name</th>
                         <th class="px-2 md:px-4 py-2 text-left">Role</th>
-                        <th class="px-2 md:px-4 py-2 hidden md:table-cell text-left">Email</th>
-                        <th class="px-2 md:px-4 py-2 hidden md:table-cell text-left">Mobile</th>
-                        <th class="px-2 md:px-4 py-2 hidden md:table-cell text-left">Address</th>
+                        <th class="px-2 md:px-4 py-2 hidden lg:table-cell text-left">Email</th>
+                        <th class="px-2 md:px-4 py-2 hidden lg:table-cell text-left">Mobile</th>
+                        <th class="px-2 md:px-4 py-2 hidden lg:table-cell text-left">Address</th>
                         <th class="px-2 md:px-4 py-2 text-left">Actions</th>
                     </tr>
                 </thead>
@@ -47,13 +47,13 @@
                                     <span class="block overflow-hidden whitespace-nowrap text-ellipsis">@user.Name</span>
                                 </td>
                                 <td class="px-2 md:px-4 py-2">@user.Role</td>
-                                <td class="px-2 md:px-4 py-2 hidden md:table-cell max-w-[200px] truncate" title="@user.Email">
+                                <td class="px-2 md:px-4 py-2 hidden lg:table-cell max-w-[200px] truncate" title="@user.Email">
                                     <span class="block overflow-hidden whitespace-nowrap text-ellipsis">@user.Email</span>
                                 </td>
-                                <td class="px-2 md:px-4 py-2 hidden md:table-cell max-w-[150px] truncate" title="@user.Mobile">
+                                <td class="px-2 md:px-4 py-2 hidden lg:table-cell max-w-[150px] truncate" title="@user.Mobile">
                                     <span class="block overflow-hidden whitespace-nowrap text-ellipsis">@user.Mobile</span>
                                 </td>
-                                <td class="px-2 md:px-4 py-2 hidden md:table-cell max-w-[200px] truncate" title="@user.Address?.ToString()">
+                                <td class="px-2 md:px-4 py-2 hidden lg:table-cell max-w-[200px] truncate" title="@user.Address?.ToString()">
                                     <span class="block overflow-hidden whitespace-nowrap text-ellipsis">@user.Address?.ToString()</span>
                                 </td>
                                 <td class="px-2 md:px-4 py-2 w-[1%] whitespace-nowrap">
