@@ -17,11 +17,11 @@
 <body class="bg-gray-100">
     <div class="flex flex-col items-center w-full">
         <div class="w-full pb-3 rounded-lg pt-6">
-            <div class="flex justify-between items-center">
+            <div class="flex flex-col lg:flex-row gap-4 justify-between items-center">
                 <h1 class="text-3xl font-semibold">Licence Details</h1>
                 <div
                     class="flex flex-col items-center bg-gradient-to-r from-red-300/75 to-grey-200/75 p-6 rounded-lg shadow-lg w-full md:w-auto self-start border-l-4 border-red-600">
-                    <h1 class="text-xl font-semibold">Are you sure you want delete this licence?</h1>
+                    <h1 class="text-center text-xl font-semibold">Are you sure you want delete this licence?</h1>
                     <p class="text-sm text-gray-500">Deletion cannot be reverted</p>
                 </div>
                 <a class="bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600 transition duration-300"
@@ -34,7 +34,7 @@
                 <a class="btn bg-yellow-400 hover:bg-yellow-500 transition duration-300 px-2 py-1 rounded"
                     asp-action="Edit" asp-route-id="@Model?.Id">Edit</a>
             </div>
-            <dl class="mt-3 grid grid-cols-1 md:grid-cols-2 gap-4">
+            <dl class="mt-3 grid grid-cols-2 gap-4">
                 <div>
                     <dt class="text-xl"> @Html.DisplayNameFor(model => model.Type) </dt>
                     <dd class="overflow-hidden truncate"> @Html.DisplayFor(model => model.Type) </dd>
