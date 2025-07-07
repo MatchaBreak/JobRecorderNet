@@ -1,7 +1,7 @@
 ﻿
 namespace JobRecorderNet.Models
 {
-    public class Client : IValidatableObject
+    public class Client 
     {
         [Key]
         public int Id { get; set; }
@@ -18,18 +18,11 @@ namespace JobRecorderNet.Models
         [Required, StringLength(20)]
         public required string Mobile { get; set; }
 
-        public required ICollection<Address> Addresses { get; set; }
+        public required ICollection<Address> Addresses { get; set; } = new List<Address>();
 
-        // Custom validation logic test
-        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-        {
-            if (Addresses == null || !Addresses.Any())
-            {
-                yield return new ValidationResult(
-                    "A client must have at least one address.",
-                    [nameof(Addresses)]);
-            }
-        }
+        // Temporary property for binding a single address during creation
+        public Address? Address { get; set; }
+        
 
         // Navigation property for related jobs
         public ICollection<Job> Jobs { get; set; } = new List<Job>();

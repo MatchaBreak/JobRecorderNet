@@ -1,9 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using JobRecorderNet.Models;
 
@@ -112,12 +107,23 @@ namespace JobRecorderNet.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Email,Phone,Mobile,CreatedAt,UpdatedAt")] Client client)
+        public async Task<IActionResult> Create(Client client, Address address)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(client);
+                client.CreatedAt = DateTime.Now;
+                client.UpdatedAt = DateTime.Now;
+
+                if(address != null) 
+                {
+                    address.CreatedAt = DateTime.Now;
+                    address.UpdatedAt = DateTime.Now;
+                    client.Addresses.Add(address);
+                }
+                // Saves the Client and Addresses together
+                _context.Clients.Add(client);
                 await _context.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index));
             }
             return View(client);

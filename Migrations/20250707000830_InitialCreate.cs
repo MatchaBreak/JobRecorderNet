@@ -64,7 +64,8 @@ namespace JobRecorderNet.Migrations
                     Postcode = table.Column<string>(type: "TEXT", maxLength: 4, nullable: false),
                     IsMain = table.Column<bool>(type: "INTEGER", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "TEXT", nullable: true)
+                    UpdatedAt = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    ClientId1 = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -72,6 +73,11 @@ namespace JobRecorderNet.Migrations
                     table.ForeignKey(
                         name: "FK_Addresses_Clients_ClientId",
                         column: x => x.ClientId,
+                        principalTable: "Clients",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Addresses_Clients_ClientId1",
+                        column: x => x.ClientId1,
                         principalTable: "Clients",
                         principalColumn: "Id");
                     table.ForeignKey(
@@ -196,6 +202,12 @@ namespace JobRecorderNet.Migrations
                 name: "IX_Addresses_ClientId",
                 table: "Addresses",
                 column: "ClientId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Addresses_ClientId1",
+                table: "Addresses",
+                column: "ClientId1",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Addresses_UserId",

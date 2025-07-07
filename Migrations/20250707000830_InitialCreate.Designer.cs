@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JobRecorderNet.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250624043157_InitialCreate")]
+    [Migration("20250707000830_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -27,6 +27,9 @@ namespace JobRecorderNet.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<int?>("ClientId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("ClientId1")
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("CreatedAt")
@@ -68,6 +71,9 @@ namespace JobRecorderNet.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ClientId");
+
+                    b.HasIndex("ClientId1")
+                        .IsUnique();
 
                     b.HasIndex("UserId")
                         .IsUnique();
@@ -290,6 +296,10 @@ namespace JobRecorderNet.Migrations
                         .WithMany("Addresses")
                         .HasForeignKey("ClientId");
 
+                    b.HasOne("JobRecorderNet.Models.Client", null)
+                        .WithOne("Address")
+                        .HasForeignKey("JobRecorderNet.Models.Address", "ClientId1");
+
                     b.HasOne("JobRecorderNet.Models.User", "User")
                         .WithOne("Address")
                         .HasForeignKey("JobRecorderNet.Models.Address", "UserId")
@@ -362,6 +372,8 @@ namespace JobRecorderNet.Migrations
 
             modelBuilder.Entity("JobRecorderNet.Models.Client", b =>
                 {
+                    b.Navigation("Address");
+
                     b.Navigation("Addresses");
 
                     b.Navigation("Jobs");

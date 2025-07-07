@@ -26,6 +26,9 @@ namespace JobRecorderNet.Migrations
                     b.Property<int?>("ClientId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int?>("ClientId1")
+                        .HasColumnType("INTEGER");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("TEXT");
 
@@ -65,6 +68,9 @@ namespace JobRecorderNet.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ClientId");
+
+                    b.HasIndex("ClientId1")
+                        .IsUnique();
 
                     b.HasIndex("UserId")
                         .IsUnique();
@@ -287,6 +293,10 @@ namespace JobRecorderNet.Migrations
                         .WithMany("Addresses")
                         .HasForeignKey("ClientId");
 
+                    b.HasOne("JobRecorderNet.Models.Client", null)
+                        .WithOne("Address")
+                        .HasForeignKey("JobRecorderNet.Models.Address", "ClientId1");
+
                     b.HasOne("JobRecorderNet.Models.User", "User")
                         .WithOne("Address")
                         .HasForeignKey("JobRecorderNet.Models.Address", "UserId")
@@ -359,6 +369,8 @@ namespace JobRecorderNet.Migrations
 
             modelBuilder.Entity("JobRecorderNet.Models.Client", b =>
                 {
+                    b.Navigation("Address");
+
                     b.Navigation("Addresses");
 
                     b.Navigation("Jobs");

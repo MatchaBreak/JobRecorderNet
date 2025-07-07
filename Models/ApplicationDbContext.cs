@@ -73,7 +73,7 @@ namespace JobRecorderNet.Models
             modelBuilder.Entity<Client>()
                 .HasMany(c => c.Addresses)
                 .WithOne(a => a.Client)
-                .HasForeignKey("ClientId");
+                .HasForeignKey(a => a.ClientId); // Specifies foreign key property
 
             // Client has many jobs (1-to-many)
             modelBuilder.Entity<Client>()
