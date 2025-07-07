@@ -26,8 +26,8 @@
                     <tr>
                         <th class="px-2 md:px-4 py-2 text-left"> @Html.DisplayNameFor(model => model.Type) </th>
                         <th class="px-2 md:px-4 py-2 text-left"> @Html.DisplayNameFor(model => model.Expiry) </th>
-                        <th class="px-2 md:px-4 py-2 text-left"> @Html.DisplayNameFor(model => model.CreatedAt) </th>
-                        <th class="px-2 md:px-4 py-2 text-left"> @Html.DisplayNameFor(model => model.UpdatedAt) </th>
+                        <th class="px-2 md:px-4 py-2 text-left hidden"> @Html.DisplayNameFor(model => model.CreatedAt) </th>
+                        <th class="px-2 md:px-4 py-2 text-left hidden"> @Html.DisplayNameFor(model => model.UpdatedAt) </th>
                         <th class="px-2 md:px-4 py-2 text-left"> Actions </th>
                     </tr>
                 </thead>
@@ -45,8 +45,8 @@
                             <tr class="border-b hover:bg-blue-50">
                                 <td class="px-2 md:px-4 py-2 max-w-[150px] truncate"> @Html.DisplayFor(modelItem => item.Type) </td>
                                 <td class="px-2 md:px-4 py-2 max-w-[150px] truncate"> @Html.DisplayFor(modelItem => item.Expiry) </td>
-                                <td class="px-2 md:px-4 py-2 max-w-[150px] truncate"> @Html.DisplayFor(modelItem => item.CreatedAt) </td>
-                                <td class="px-2 md:px-4 py-2 max-w-[150px] truncate"> @Html.DisplayFor(modelItem => item.UpdatedAt) </td>
+                                <td class="px-2 md:px-4 py-2 max-w-[150px] truncate hidden"> @Html.DisplayFor(modelItem => item.CreatedAt) </td>
+                                <td class="px-2 md:px-4 py-2 max-w-[150px] truncate hidden"> @Html.DisplayFor(modelItem => item.UpdatedAt) </td>
                                 <td class="px-2 md:px-4 py-2 w-[1%] whitespace-nowrap">
                                     <a class="bg-blue-600 hover:bg-blue-700 transition duration-500 text-white px-2 py-1 rounded" asp-action="Details" asp-route-id="@item.Id">Details</a>
                                     <a class="bg-yellow-400 hover:bg-yellow-500 transition duration-500 text-black px-2 py-1 rounded" asp-action="Edit" asp-route-id="@item.Id">Edit</a>

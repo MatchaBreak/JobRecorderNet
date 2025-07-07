@@ -25,10 +25,10 @@
                     <tr>
                         <th class="px-2 md:px-4 py-2 text-left"> @Html.DisplayNameFor(model => model.Name) </th>
                         <th class="px-2 md:px-4 py-2 text-left"> @Html.DisplayNameFor(model => model.Street) </th>
-                        <th class="px-2 md:px-4 py-2 text-left"> @Html.DisplayNameFor(model => model.Suburb) </th>
-                        <th class="px-2 md:px-4 py-2 text-left"> @Html.DisplayNameFor(model => model.State) </th>
-                        <th class="px-2 md:px-4 py-2 text-left"> @Html.DisplayNameFor(model => model.Postcode) </th>
-                        <th class="px-2 md:px-4 py-2 text-left"> Main Address</th>
+                        <th class="px-2 md:px-4 py-2 text-left hidden lg:table-cell"> @Html.DisplayNameFor(model => model.Suburb) </th>
+                        <th class="px-2 md:px-4 py-2 text-left hidden lg:table-cell"> @Html.DisplayNameFor(model => model.State) </th>
+                        <th class="px-2 md:px-4 py-2 text-left hidden lg:table-cell"> @Html.DisplayNameFor(model => model.Postcode) </th>
+                        <th class="px-2 md:px-4 py-2 text-left hidden lg:table-cell"> Main Address</th>
                         <th class="px-2 md:px-4 py-2 text-left hidden"> @Html.DisplayNameFor(model => model.CreatedAt) </th>
                         <th class="px-2 md:px-4 py-2 text-left hidden"> @Html.DisplayNameFor(model => model.UpdatedAt) </th>
                         <th class="px-2 md:px-4 py-2 text-left"> Actions </th>
@@ -40,10 +40,10 @@
                         <tr class="border-b hover:bg-blue-50">
                             <td class="px-2 md:px-4 py-2 max-w-[150px] truncate"> @Html.DisplayFor(modelItem => item.Name) </td>
                             <td class="px-2 md:px-4 py-2 max-w-[150px] truncate"> @Html.DisplayFor(modelItem => item.Street) </td>
-                            <td class="px-2 md:px-4 py-2 max-w-[150px] truncate"> @Html.DisplayFor(modelItem => item.Suburb) </td>
-                            <td class="px-2 md:px-4 py-2 max-w-[150px] truncate"> @Html.DisplayFor(modelItem => item.State) </td>
-                            <td class="px-2 md:px-4 py-2 max-w-[150px] truncate"> @Html.DisplayFor(modelItem => item.Postcode) </td>
-                            <td class="px-2 md:px-4 py-2 max-w-[150px] truncate"> @(item.IsMain ? "Yes" : "No") </td>
+                            <td class="px-2 md:px-4 py-2 max-w-[150px] truncate hidden lg:table-cell"> @Html.DisplayFor(modelItem => item.Suburb) </td>
+                            <td class="px-2 md:px-4 py-2 max-w-[150px] truncate hidden lg:table-cell"> @Html.DisplayFor(modelItem => item.State) </td>
+                            <td class="px-2 md:px-4 py-2 max-w-[150px] truncate hidden lg:table-cell"> @Html.DisplayFor(modelItem => item.Postcode) </td>
+                            <td class="px-2 md:px-4 py-2 max-w-[150px] truncate hidden lg:table-cell"> @(item.IsMain ? "Yes" : "No") </td>
                             <td class="px-2 md:px-4 py-2 max-w-[150px] truncate hidden"> @Html.DisplayFor(modelItem => item.CreatedAt) </td>
                             <td class="px-2 md:px-4 py-2 max-w-[150px] truncate hidden"> @Html.DisplayFor(modelItem => item.UpdatedAt) </td>
                             <td class="px-2 md:px-4 py-2 w-[1%] whitespace-nowrap">

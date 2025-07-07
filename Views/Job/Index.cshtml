@@ -26,11 +26,11 @@
                     <tr>
                         <th class="px-2 md:px-4 py-2 text-left"> @Html.DisplayNameFor(model => model.JobNo) </th>
                         <th class="px-2 md:px-4 py-2 text-left"> @Html.DisplayNameFor(model => model.Type) </th>
-                        <th class="px-2 md:px-4 py-2 text-left"> @Html.DisplayNameFor(model => model.Client) </th>
-                        <th class="px-2 md:px-4 py-2 text-left"> @Html.DisplayNameFor(model => model.Supervisor) </th>
-                        <th class="px-2 md:px-4 py-2 text-left"> @Html.DisplayNameFor(model => model.Address) </th>
-                        <th class="px-2 md:px-4 py-2 text-left"> @Html.DisplayNameFor(model => model.Description) </th>
-                        <th class="px-2 md:px-4 py-2 text-left"> @Html.DisplayNameFor(model => model.Status) </th>
+                        <th class="px-2 md:px-4 py-2 text-left hidden lg:table-cell"> @Html.DisplayNameFor(model => model.Client) </th>
+                        <th class="px-2 md:px-4 py-2 text-left hidden lg:table-cell"> @Html.DisplayNameFor(model => model.Supervisor) </th>
+                        <th class="px-2 md:px-4 py-2 text-left hidden lg:table-cell"> @Html.DisplayNameFor(model => model.Address) </th>
+                        <th class="px-2 md:px-4 py-2 text-left hidden lg:table-cell"> @Html.DisplayNameFor(model => model.Description) </th>
+                        <th class="px-2 md:px-4 py-2 text-left hidden lg:table-cell"> @Html.DisplayNameFor(model => model.Status) </th>
                         <th class="px-2 md:px-4 py-2 text-left hidden"> @Html.DisplayNameFor(model => model.CreatedAt) </th>
                         <th class="px-2 md:px-4 py-2 text-left hidden"> @Html.DisplayNameFor(model => model.UpdatedAt) </th>
                         <th class="px-2 md:px-4 py-2 text-left"> Actions </th>
@@ -50,11 +50,11 @@
                             <tr class="border-b hover:bg-blue-50">
                                 <td class="px-2 md:px-4 py-2 max-w-[150px] truncate"> @Html.DisplayFor(modelItem => item.JobNo) </td>
                                 <td class="px-2 md:px-4 py-2 max-w-[150px] truncate"> @Html.DisplayFor(modelItem => item.Type) </td>
-                                <td class="px-2 md:px-4 py-2 max-w-[150px] truncate"> @Html.DisplayFor(modelItem => item.Client.Email) </td>
-                                <td class="px-2 md:px-4 py-2 max-w-[150px] truncate"> @Html.DisplayFor(modelItem => item.Supervisor.Address) </td>
-                                <td class="px-2 md:px-4 py-2 max-w-[150px] truncate"> @Html.DisplayFor(modelItem => item.Address.Name) </td>
-                                <td class="px-2 md:px-4 py-2 max-w-[150px] truncate"> @Html.DisplayFor(modelItem => item.Description) </td>
-                                <td class="px-2 md:px-4 py-2 max-w-[150px] truncate"> @Html.DisplayFor(modelItem => item.Status) </td>
+                                <td class="px-2 md:px-4 py-2 max-w-[150px] truncate hidden lg:table-cell"> @Html.DisplayFor(modelItem => item.Client.Email) </td>
+                                <td class="px-2 md:px-4 py-2 max-w-[150px] truncate hidden lg:table-cell"> @Html.DisplayFor(modelItem => item.Supervisor.Address) </td>
+                                <td class="px-2 md:px-4 py-2 max-w-[150px] truncate hidden lg:table-cell"> @Html.DisplayFor(modelItem => item.Address.Name) </td>
+                                <td class="px-2 md:px-4 py-2 max-w-[150px] truncate hidden lg:table-cell"> @Html.DisplayFor(modelItem => item.Description) </td>
+                                <td class="px-2 md:px-4 py-2 max-w-[150px] truncate hidden lg:table-cell"> @Html.DisplayFor(modelItem => item.Status) </td>
                                 <td class="px-2 md:px-4 py-2 max-w-[150px] truncate hidden"> @Html.DisplayFor(modelItem => item.CreatedAt) </td>
                                 <td class="px-2 md:px-4 py-2 max-w-[150px] truncate hidden"> @Html.DisplayFor(modelItem => item.UpdatedAt) </td>
                                 <td class="px-2 md:px-4 py-2 w-[1%] whitespace-nowrap">
