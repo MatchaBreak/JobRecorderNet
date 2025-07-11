@@ -1,4 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using JobRecorderNet.Models;
 using System.Security.Cryptography.X509Certificates;
 
 /*
@@ -13,16 +16,15 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace JobRecorderNet.Models
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext<User, IdentityRole<int>, int>
     {
         // Inject database configuration
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) 
-                : base(options)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
         }
 
         // To map to the Database (SQLite)
-        public DbSet<User> Users { get; set; }
+        // public DbSet<User> Users { get; set; }
         public DbSet<Client> Clients { get; set; }
         public DbSet<Job> Jobs { get; set; }
         public DbSet<License> Licenses { get; set; }
