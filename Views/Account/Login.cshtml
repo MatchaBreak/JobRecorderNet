@@ -11,10 +11,11 @@
 </head>
 
 <body class="bg-gray-100">
-    <div class="flex flex-col w-full justify-center items-center">    
+    <div class="flex flex-col w-full justify-center items-center mt-[20%]">    
         <form class="flex flex-col gap-4 bg-gray-100 rounded shadow border w-[35%] p-5" asp-action="Login" method="post">
             <div asp-validation-summary="All" class="text-danger">
-                <h1 class="text-3xl font-semibold text-center">Log-in Below</h1>
+                <h1 class="text-4xl font-semibold text-center p-2">JobRecorderNet</h1>
+                <h2 class="text-3xl text-center font-light">Login Below</h2>
             </div>
 
             <div>
@@ -29,7 +30,7 @@
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
             <div class="flex form-group w-full justify-center">
-                <button class="bg-blue-600 hover:bg-blue-700 transition duration-500 text-white px-4 py-2 rounded" type="submit">Login</button>
+                <button class="w-full bg-blue-600 hover:bg-blue-700 transition duration-500 text-white py-2 rounded" type="submit">Login</button>
             </div>
             <p class="w-full text-center">Don't have an account? 
                 <a asp-controller="Account" asp-action="Register" class="text-blue-600 hover:underline"> Register here </a>
