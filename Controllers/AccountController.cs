@@ -17,14 +17,14 @@ namespace JobRecorderNet.Controllers
             _signInManager = signInManager;
         }
 
-        // Show Login Page
+        // Shows Login Page
         [AllowAnonymous]
         public IActionResult Login()
         {
             return View();
         }
 
-        // Handle Login Form Submission
+        // Handles Login Form Submission
         [HttpPost]
         [AllowAnonymous]
         public async Task<IActionResult> Login(LoginViewModel model)
@@ -45,14 +45,14 @@ namespace JobRecorderNet.Controllers
             return View(model);
         }
 
-        // Show Register Page
+        // Shows Register Page
         [AllowAnonymous]
         public IActionResult Register()
         {
             return View();
         }
 
-        // Handle Register Form Submission
+        // Handles Register Form Submission
         [HttpPost]
         [AllowAnonymous]
         public async Task<IActionResult> Register(RegisterViewModel model)
@@ -84,6 +84,8 @@ namespace JobRecorderNet.Controllers
         }
 
         // Logout
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
