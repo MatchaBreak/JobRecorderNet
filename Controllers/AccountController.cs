@@ -64,13 +64,13 @@ namespace JobRecorderNet.Controllers
                 UserName = model.Email,
                 Email = model.Email,
                 Name = model.Name,
-                Mobile = "0000000000", // Placeholder or default
-                Role = UserRole.Manager // Default role
+                Mobile = "", // Default, then can be edited later on in the app
             };
 
             var result = await _userManager.CreateAsync(user, model.Password);
             if (result.Succeeded)
             {
+                await _userManager.AddToRoleAsync(user, user.Role.ToString()); // To Match User role in dynamic display on Homepage
                 await _signInManager.SignInAsync(user, isPersistent: false);
                 return RedirectToAction("Index", "Home");
             }

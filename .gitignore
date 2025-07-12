@@ -8,3 +8,5 @@ obj/
 *.ide
 
 .fake
+Data/SQLiteDatabase.db-shm
+Data/SQLiteDatabase.db-wal

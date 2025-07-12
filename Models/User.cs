@@ -34,8 +34,8 @@ namespace JobRecorderNet.Models
         public Address? Address { get; set; }
 
 
-        [Required]
-        public required UserRole Role { get; set; }
+        // [Required]
+        public UserRole Role { get; set; } = UserRole.Contractor; // Just a default if it isn't assigned
 
         // Licenses 
         public ICollection<License>? Licenses { get; set; }
