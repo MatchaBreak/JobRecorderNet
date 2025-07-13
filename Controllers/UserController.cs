@@ -75,6 +75,9 @@ namespace JobRecorderNet.Controllers
 
             var users = await usersQuery.ToListAsync();
 
+            int userCount = await _context.Users.CountAsync();
+            ViewBag.UserCount = userCount;
+
             ViewData["SearchBarViewModel"] = viewModel;
             return View(users);
         }

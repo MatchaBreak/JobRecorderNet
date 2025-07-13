@@ -73,6 +73,8 @@ namespace JobRecorderNet.Controllers
 
             // list of clients returned in the view
             var clients = await clientsQuery.ToListAsync();
+            int clientCount = await _context.Clients.CountAsync();
+            ViewBag.ClientCount = clientCount;
 
             ViewData["SearchBarViewModel"] = viewModel;
             return View(clients);

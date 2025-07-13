@@ -3,6 +3,7 @@ using JobRecorderNet.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace JobRecorderNet.Controllers
 {
@@ -10,11 +11,13 @@ namespace JobRecorderNet.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly UserManager<User> _userManager;
+        private readonly ApplicationDbContext _context;
 
-        public HomeController(ILogger<HomeController> logger, UserManager<User> userManager)
+        public HomeController(ILogger<HomeController> logger, UserManager<User> userManager, ApplicationDbContext context)
         {
             _logger = logger;
             _userManager = userManager;
+            _context = context;
         }
 
         [Authorize]
@@ -32,6 +35,14 @@ namespace JobRecorderNet.Controllers
                 ViewBag.Name = "Guest";
                 ViewBag.Role = "Viewer";
             }
+
+            int userCount = await _context.Users.CountAsync();
+            int clientCount = await _context.Clients.CountAsync();
+            int jobCount = await _context.Jobs.CountAsync();
+
+            ViewBag.UserCount = userCount;
+            ViewBag.ClientCount = clientCount;
+            ViewBag.JobCount = jobCount;
 
             return View();
         }
