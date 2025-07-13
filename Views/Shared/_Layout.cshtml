@@ -31,24 +31,24 @@
         <header class="sticky z-50 bg-gray-200 shadow-md rounded-xl mx-auto w-[100%] mt-2 ">
             <div class="flex items-center justify-center flex-wrap px-4 py-2">
                 <nav class="nav-links flex overflow-x-auto whitespace-nowrap gap-2 py-2">
-                    <a class="text-gray-800 font-semibold hover:text-blue-600 hover:bg-white rounded px-3 py-2 transition flex items-center"
+                    <a class="@(currentController == "Home" && currentAction == "Index" ? "bg-white" : "") text-gray-800 font-semibold hover:text-blue-600 hover:bg-white rounded px-3 py-2 duration-500 flex items-center"
                     asp-controller="Home" asp-action="Index"><i class="fa fa-home mr-2"></i>Home</a>
-                    <a class="text-gray-800 font-semibold hover:text-blue-600 hover:bg-white rounded px-3 py-2 transition flex items-center"
+                    <a class="@(currentController == "User" ? "bg-white" : "") text-gray-800 font-semibold hover:text-blue-600 hover:bg-white rounded px-3 py-2 duration-500 flex items-center"
                     asp-controller="User" asp-action="Index"><i class="fa fa-users mr-2"></i>Users</a>
-                    <a class="text-gray-800 font-semibold hover:text-blue-600 hover:bg-white rounded px-3 py-2 transition flex items-center"
+                    <a class="@(currentController == "Client" ? "bg-white" : "") text-gray-800 font-semibold hover:text-blue-600 hover:bg-white rounded px-3 py-2 duration-500 flex items-center"
                     asp-controller="Client" asp-action="Index"><i class="fa fa-user mr-2"></i>Clients</a>
-                    <a class="text-gray-800 font-semibold hover:text-blue-600 hover:bg-white rounded px-3 py-2 transition flex items-center"
+                    <a class="@(currentController == "Address" ? "bg-white" : "") text-gray-800 font-semibold hover:text-blue-600 hover:bg-white rounded px-3 py-2 duration-500 flex items-center"
                     asp-controller="Address" asp-action="Index"><i class="fa fa-map-marker mr-2"></i>Addresses</a>
-                    <a class="text-gray-800 font-semibold hover:text-blue-600 hover:bg-white rounded px-3 py-2 transition flex items-center"
+                    <a class="@(currentController == "Job" ? "bg-white" : "") text-gray-800 font-semibold hover:text-blue-600 hover:bg-white rounded px-3 py-2 duration-500 flex items-center"
                     asp-controller="Job" asp-action="Index"><i class="fa fa-briefcase mr-2"></i>Jobs</a>
-                    <a class="text-gray-800 font-semibold hover:text-blue-600 hover:bg-white rounded px-3 py-2 transition flex items-center"
+                    <a class="@(currentController == "Job" ? "bg-white" : "") text-gray-800 font-semibold hover:text-blue-600 hover:bg-white rounded px-3 py-2 duration-500 flex items-center"
                     asp-controller="Job" asp-action="Index"><i class="fa fa-folder-open mr-2"></i>My Jobs</a>
-                    <a class="text-gray-800 font-semibold hover:text-blue-600 hover:bg-white rounded px-3 py-2 transition flex items-center"
+                    <a class="@(currentController == "License" ? "bg-white" : "") text-gray-800 font-semibold hover:text-blue-600 hover:bg-white rounded px-3 py-2 duration-500 flex items-center"
                     asp-controller="License" asp-action="Index"><i class="fa fa-id-card mr-2"></i>Licences</a>
-                    <a class="text-gray-800 font-semibold hover:text-blue-600 hover:bg-white rounded px-3 py-2 transition flex items-center"
+                    <a class="@(currentController == "License" ? "bg-white" : "") text-gray-800 font-semibold hover:text-blue-600 hover:bg-white rounded px-3 py-2 duration-500 flex items-center"
                     asp-controller="License" asp-action="Index"><i class="fa fa-id-card mr-2"></i>My Licences</a>
-                    <a class="text-gray-800 font-semibold hover:text-blue-600 hover:bg-white rounded px-3 py-2 transition flex items-center"
-                    asp-controller="Home" asp-action="Privacy"><i class="fa fa-shield-alt mr-2"></i>About</a>
+                    <a class="@(currentController == "Home" && currentAction == "Privacy" ? "bg-white" : "") text-gray-800 font-semibold hover:text-blue-600 hover:bg-white rounded px-3 py-2 duration-500 flex items-center"
+                    asp-controller="Home" asp-action="Privacy"><i class="fas fa-info-circle mr-2"></i>About</a>
                     <form method="post" asp-controller="Account" asp-action="Logout" class="inline">
                         <button type="submit" class="text-gray-800 font-semibold hover:text-blue-600 hover:bg-white rounded px-3 py-2 transition flex items-center">
                             <i class="fa fa-sign-out-alt mr-2"></i>Logout
@@ -65,9 +65,9 @@
         </main>
 
         <!-- Footer -->
-        <footer class="bg-white border-t text-gray-500 text-sm text-center py-4 hidden">
+        @* <footer class="bg-white border-t text-gray-500 text-sm text-center py-4 hidden">
             &copy; 2025 - JobRecorderNet - <a class="text-blue-500 hover:underline" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </footer>
+        </footer> *@
 
         <script src="~/lib/jquery/dist/jquery.min.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
