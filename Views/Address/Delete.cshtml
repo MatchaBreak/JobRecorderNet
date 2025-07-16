@@ -56,8 +56,8 @@
                     <dd class="overflow-hidden truncate"> @Html.DisplayFor(model => model.Postcode) </dd>
                 </div>
                 <div>
-                    <dt class="text-xl"> @Html.DisplayNameFor(model => model.IsMain) </dt>
-                    <dd class="overflow-hidden truncate"> @Html.DisplayFor(model => model.IsMain) </dd>
+                    <dt class="text-xl"> Main Address </dt>
+                    <dd class="overflow-hidden truncate"> @((Model?.IsMain ?? false) ? "Yes" : "No") </dd>
                 </div>
                 <div>
                     <dt class="text-xl"> @Html.DisplayNameFor(model => model.CreatedAt) </dt>

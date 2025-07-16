@@ -56,9 +56,12 @@
                             <span asp-validation-for="Postcode" class="text-danger"></span>
                         </div>
                         <div class="form-group form-check">
-                            <label class="form-check-label">
-                                <input class="form-check-input" asp-for="IsMain" /> @Html.DisplayNameFor(model =>
-                                                                model.IsMain)
+                            <label class="form-check-label flex flex-col gap-2 justify-center items-start">
+                                <label asp-for="IsMain" class="control-label block text-xl font-semibold">Address Type</label>
+                                <div class="flex flex-row justify-center items-center gap-2">
+                                    <input asp-for="IsMain" class="h-6 w-6"/>
+                                    <p class="control-label block text-md">Main Address</p>
+                                </div>
                             </label>
                         </div>
                         <div class="form-group hidden">

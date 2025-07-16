@@ -50,7 +50,7 @@
                 </div>
                 <div>
                     <dt class="text-xl"> Main Address </dt>
-                    <dd class="overflow-hidden truncate"> @(Model.IsMain ? "Yes" : "No") </dd>
+                    <dd class="overflow-hidden truncate"> @((Model?.IsMain ?? false) ? "Yes" : "No") </dd>
                 </div>
                 <div>
                     <dt class="text-xl"> @Html.DisplayNameFor(model => model.CreatedAt) </dt>
