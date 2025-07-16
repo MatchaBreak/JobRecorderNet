@@ -54,38 +54,38 @@
         <div class="flex flex-col border p-4 rounded-md w-full text-center">
             <div class="flex flex-row justify-between pb-2">
                 <h1 class="font-bold">Recent Users</h1>
-                <button class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 transition duration-300">View All</button>
+                <a asp-controller="User" class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 transition duration-300">View All</a>
             </div>
             <ul class="flex flex-col gap-2">
                 @foreach (var user in Model.TopUsers)
                 {
-                    <div class="grid grid-cols-5 hover:bg-gray-100">
+                    <a asp-controller="User" asp-action="Details" asp-route-id="@user.Id" class="grid grid-cols-5 hover:bg-gray-100">
                         <div class="flex flex-col col-span-2">
                             <p class="text-left font-semibold">@user.Name</p>
                             <p class="text-left font-light text-sm">@user.Email</p>
                         </div>
                         <p class="flex justify-center line-clamp-2 h-full items-center px-2 border-2 rounded-2xl">@user.Role</p>
                         <p class="text-right col-span-2 font-light leading-tight">Created At<br>@user.CreatedAt</p>
-                    </div>
+                    </a>
                 }
             </ul>
         </div>
         <div class="flex flex-col border p-4 rounded-md w-full text-center">
             <div class="flex flex-row justify-between pb-2">
                 <h1 class="font-bold">Recent Jobs</h1>
-                <button class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 transition duration-300">View All</button>
+                <a asp-controller="Job" class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 transition duration-300">View All</a>
             </div>
             <ul class="flex flex-col gap-2">
                 @foreach (var job in Model.RecentJobs)
                 {
-                    <div class="grid grid-cols-5 hover:bg-gray-100">
+                    <a asp-controller="Job" asp-action="Details" asp-route-id="@job.Id" class="grid grid-cols-5 hover:bg-gray-100">
                         <div class="flex flex-col col-span-2">
                             <p class="text-left font-semibold">@job.Id</p>
                             <p class="text-left font-light text-sm">@job.Type</p>
                         </div>
                         <p class="flex justify-center line-clamp-2 h-full items-center px-2 bg-gray-100 border rounded-2xl">@job.Status</p>
                         <p class="text-right col-span-2 font-light leading-tight">Created At<br>@job.CreatedAt</p>
-                    </div>
+                    </a>
                 }
             </ul>
         </div>
